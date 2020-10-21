@@ -45,9 +45,11 @@ public class CompanyController {
                 .collect(Collectors.toList());
     }
 
-    @PutMapping(path = "/{id}")
-    public Company updateCompanyById(@PathVariable Integer id, @RequestBody Company updatedCompany) {
-        return null;
+    @PutMapping(path = "/{code}")
+    public Company updateCompanyByCode(@PathVariable Integer code, @RequestBody Company updatedCompany) {
+        companies.remove(getCompanyByCode(code));
+        companies.add(updatedCompany);
+        return updatedCompany;
     }
 
     @DeleteMapping(path = "/{id}")

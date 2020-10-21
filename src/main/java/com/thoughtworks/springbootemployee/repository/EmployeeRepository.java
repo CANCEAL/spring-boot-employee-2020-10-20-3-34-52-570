@@ -28,4 +28,8 @@ public class EmployeeRepository {
     public void delete(int employeeId) {
 
     }
+
+    public List<Employee> search(String gender) {
+        return null;
+    }
 }

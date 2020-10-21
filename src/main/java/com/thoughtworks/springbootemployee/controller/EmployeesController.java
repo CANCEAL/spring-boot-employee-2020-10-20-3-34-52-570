@@ -20,31 +20,26 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
 
-    // OK
     @GetMapping
     public List<Employee> getEmployees() {
        return employeeService.getAll();
     }
 
-    // OK
     @PostMapping
     public Employee create(@RequestBody Employee employee) {
         return employeeService.create(employee);
     }
 
-    // OK
     @GetMapping(path = "/{id}")
     public Employee getEmployeeById(@PathVariable Integer id) {
         return employeeService.retrieve(id);
     }
 
-    // OK
     @PutMapping(path = "/{id}")
     public Employee updateEmployeeById(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         return employeeService.update(id, updatedEmployee);
     }
 
-    // OK
     @DeleteMapping(path = "/{id}")
     public void deleteEmployeeById(@PathVariable Integer id) {
         employeeService.delete(id);
@@ -57,9 +52,6 @@ public class EmployeesController {
 
     @GetMapping(params = {"page", "pageSize"})
     public List<Employee> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return employees.stream()
-                .skip(page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
+        return employeeService.getByPage(page, pageSize);
     }
 }

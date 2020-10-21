@@ -21,6 +21,6 @@ public class EmployeeService {
     }
 
     public Employee retrieve(int employeeId) {
-        return null;
+        return repository.retrieve(employeeId);
     }
 }

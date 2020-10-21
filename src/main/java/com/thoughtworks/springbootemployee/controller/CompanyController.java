@@ -23,9 +23,12 @@ public class CompanyController {
         return company;
     }
 
-    @GetMapping(path = "/{id}")
-    public Company getCompanyById(@PathVariable Integer id) {
-        return null;
+    @GetMapping(path = "/{code}")
+    public Company getCompanyByCode(@PathVariable Integer code) {
+        return companies.stream()
+                .filter(company -> company.getCode().equals(code))
+                .findFirst()
+                .orElse(null);
     }
 
     @GetMapping(path = "/{id}/employees")

@@ -47,11 +47,11 @@ public class CompanyService {
     }
 
     public void delete(Integer companyCode) {
-        List<Company> companies = companyRepository.getAll();
-        companies.stream()
-                .filter(company -> company.getCode().equals(companyCode))
-                .findFirst()
-                .ifPresent(company -> companyRepository.delete(company));
+        List<Employee> employees = employeeRepository.getAll().stream()
+                .filter(employee -> employee.getCompanyCode().equals(companyCode))
+                .collect(Collectors.toList());
+
+        employees.stream().forEach(employee -> employeeRepository.delete(employee));
     }
 
     public List<Company> getByPage(int page, int pageSize) {

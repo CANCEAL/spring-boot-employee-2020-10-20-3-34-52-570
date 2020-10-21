@@ -30,4 +30,9 @@ public class Company {
     String name;
     String location;
 
+    public Company(Integer code, String name, String location) {
+        this.code = code;
+        this.name = name;
+        this.location = location;
+    }
 }

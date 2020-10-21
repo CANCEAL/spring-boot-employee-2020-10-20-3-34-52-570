@@ -24,12 +24,11 @@ public class EmployeesController {
     }
 
     @GetMapping(path = "/{id}")
-    public Employee getEmployeeById(@PathVariable int id) {
-        for (Employee employee : employees) {
-            if (employee.getId() == id) {
-                return employee;
-            }
-        } return null;
+    public Employee getEmployeeById(@PathVariable Integer id) {
+        return employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .orElse(null);
     }
 
 

@@ -2,7 +2,6 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,7 +12,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/employees")
 public class EmployeesController {
     // TODO remove later
-    List<Employee> employees = new ArrayList<>();
+    private List<Employee> employees = new ArrayList<>();
 
     private final EmployeeService employeeService;
 
@@ -56,9 +55,7 @@ public class EmployeesController {
         employees.stream()
                 .filter(employee -> employee.getId().equals(id))
                 .findFirst()
-                .ifPresent(employee -> {
-                    employees.remove(employee);
-                });
+                .ifPresent(employee -> employees.remove(employee));
     }
 
     @GetMapping(params = "gender")

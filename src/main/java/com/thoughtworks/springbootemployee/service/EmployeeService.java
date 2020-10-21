@@ -8,7 +8,7 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
-    EmployeeRepository repository;
+    private EmployeeRepository repository;
 
     public EmployeeService(EmployeeRepository repository) {
         this.repository = repository;

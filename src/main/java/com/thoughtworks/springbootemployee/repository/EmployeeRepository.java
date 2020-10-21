@@ -19,7 +19,8 @@ public class EmployeeRepository {
     }
 
     public Employee save(Employee employee) {
-        return null;
+         employeeList.add(employee);
+         return employee;
     }
 
     public Employee retrieve(int employeeId) {

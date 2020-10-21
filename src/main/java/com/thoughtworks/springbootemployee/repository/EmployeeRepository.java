@@ -8,4 +8,12 @@ public class EmployeeRepository {
     public List<Employee> getAll() {
         return null;
     }
+
+    public Employee create() {
+        return null;
+    }
+
+    public Employee save(Employee employee) {
+        return null;
+    }
 }

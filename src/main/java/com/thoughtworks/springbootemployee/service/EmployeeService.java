@@ -23,7 +23,11 @@ public class EmployeeService {
     }
 
     public Employee retrieve(int employeeId) {
-        return repository.retrieve(employeeId);
+        List<Employee> employees = repository.getAll();
+        return employees.stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .orElse(null);
     }
 
     public Employee update(int employeeId, Employee employee) {

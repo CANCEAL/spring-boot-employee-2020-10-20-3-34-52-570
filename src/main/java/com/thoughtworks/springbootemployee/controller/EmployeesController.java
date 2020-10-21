@@ -21,22 +21,22 @@ public class EmployeesController {
         this.employeeService = employeeService;
     }
 
+    // OK
     @GetMapping
     public List<Employee> getEmployees() {
        return employeeService.getAll();
     }
 
+    // OK
     @PostMapping
     public Employee create(@RequestBody Employee employee) {
         return employeeService.create(employee);
     }
 
+    // OK
     @GetMapping(path = "/{id}")
     public Employee getEmployeeById(@PathVariable Integer id) {
-        return employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+        return employeeService.retrieve(id);
     }
 
     @PutMapping(path = "/{id}")

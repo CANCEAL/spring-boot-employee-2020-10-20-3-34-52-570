@@ -10,6 +10,7 @@ import java.util.List;
 public class EmployeeService {
     private EmployeeRepository repository;
 
+
     public EmployeeService(EmployeeRepository repository) {
         this.repository = repository;
     }
@@ -30,8 +31,17 @@ public class EmployeeService {
                 .orElse(null);
     }
 
-    public Employee update(int employeeId, Employee employee) {
-        return repository.update(employee);
+    public Employee update(Integer employeeId, Employee updatedEmployee) {
+        List<Employee> employees = repository.getAll();
+        employees.stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .ifPresent(employee -> {
+                        employees.remove(employee);
+                        employees.add(updatedEmployee);
+                });
+        repository.save(employees);
+        return updatedEmployee;
     }
 
     public void delete(int employeeId) {

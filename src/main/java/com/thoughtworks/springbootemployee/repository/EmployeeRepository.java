@@ -23,6 +23,11 @@ public class EmployeeRepository {
          return employee;
     }
 
+    public List<Employee> save(List<Employee> employees) {
+        this.employeeList = employees;
+        return employees;
+    }
+
     public Employee update(Employee employee) {
         return null;
     }

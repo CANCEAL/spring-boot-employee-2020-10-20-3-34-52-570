@@ -15,4 +15,10 @@ public class CompanyController {
     public List<Company> getCompanies() {
         return companies;
     }
+
+    @PostMapping
+    public Company createCompany(@RequestBody Company company) {
+        companies.add(company);
+        return company;
+    }
 }

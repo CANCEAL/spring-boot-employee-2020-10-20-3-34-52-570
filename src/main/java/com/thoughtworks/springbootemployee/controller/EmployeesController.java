@@ -60,4 +60,12 @@ public class EmployeesController {
                 .filter(employee -> employee.getGender().equals(gender))
                 .collect(Collectors.toList());
     }
+
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Employee> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        return employees.stream()
+                .skip(page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
+    }
 }

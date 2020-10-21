@@ -38,17 +38,16 @@ public class EmployeesController {
         return employeeService.retrieve(id);
     }
 
+    // OK
     @PutMapping(path = "/{id}")
     public Employee updateEmployeeById(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         return employeeService.update(id, updatedEmployee);
     }
 
+    // OK
     @DeleteMapping(path = "/{id}")
     public void deleteEmployeeById(@PathVariable Integer id) {
-        employees.stream()
-                .filter(employee -> employee.getId().equals(id))
-                .findFirst()
-                .ifPresent(employee -> employees.remove(employee));
+        employeeService.delete(id);
     }
 
     @GetMapping(params = "gender")

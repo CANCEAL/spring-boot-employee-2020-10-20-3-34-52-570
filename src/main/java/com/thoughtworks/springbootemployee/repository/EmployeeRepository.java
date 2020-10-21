@@ -33,7 +33,11 @@ public class EmployeeRepository {
     }
 
     public void delete(int employeeId) {
+        employeeList.remove(employeeId);
+    }
 
+    public void delete(Employee employee) {
+        employeeList.remove(employee);
     }
 
     public List<Employee> search(String gender) {

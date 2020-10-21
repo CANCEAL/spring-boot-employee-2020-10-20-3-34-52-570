@@ -45,7 +45,11 @@ public class EmployeeService {
     }
 
     public void delete(int employeeId) {
-        repository.delete(employeeId);
+        List<Employee> employees = repository.getAll();
+        employees.stream()
+                .filter(employee -> employee.getId().equals(employeeId))
+                .findFirst()
+                .ifPresent(employee -> repository.delete(employee));
     }
 
     public List<Employee> search(String gender) {

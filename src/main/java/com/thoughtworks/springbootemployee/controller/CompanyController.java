@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -38,7 +39,10 @@ public class CompanyController {
 
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return null;
+        return companies.stream()
+                .skip(page * pageSize)
+                .limit(pageSize)
+                .collect(Collectors.toList());
     }
 
     @PutMapping(path = "/{id}")

@@ -20,4 +20,8 @@ public class EmployeeRepository {
     public Employee retrieve(int employeeId) {
         return null;
     }
+
+    public Employee update(Employee employee) {
+        return null;
+    }
 }

@@ -23,4 +23,8 @@ public class EmployeeService {
     public Employee retrieve(int employeeId) {
         return repository.retrieve(employeeId);
     }
+
+    public Employee update(int employeeId, Employee employee) {
+        return repository.update(employee);
+    }
 }

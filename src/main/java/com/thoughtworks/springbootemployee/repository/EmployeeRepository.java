@@ -14,10 +14,6 @@ public class EmployeeRepository {
         return employeeList;
     }
 
-    public Employee create() {
-        return null;
-    }
-
     public Employee save(Employee employee) {
          employeeList.add(employee);
          return employee;
@@ -25,9 +21,5 @@ public class EmployeeRepository {
 
     public void delete(Employee employee) {
         employeeList.remove(employee);
-    }
-
-    public List<Employee> search(String gender) {
-        return null;
     }
 }

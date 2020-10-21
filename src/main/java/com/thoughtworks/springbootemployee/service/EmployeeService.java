@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
@@ -45,6 +46,9 @@ public class EmployeeService {
     }
 
     public List<Employee> search(String gender) {
-        return repository.search(gender);
+        List<Employee> employees = repository.getAll();
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
     }
 }

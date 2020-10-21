@@ -69,7 +69,6 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(updatedEmployee, employeeService.update(1, updatedEmployee));
     }
 
-    // If you don’t know how to mock delete method, try to search Mockito.verify()
     @Test
     void should_delete_employee_when_delete_given_employee_id() {
         // given
@@ -89,16 +88,17 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employees_when_searched_given_gender() {
         //given
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = new EmployeeRepository();
         Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000);
         Employee employee2 = new Employee(2, "Ana", 22, "Female", 1000);
         List<Employee> expected = Arrays.asList(employee1);
-        when(repository.search("male")).thenReturn(expected);
 
         EmployeeService employeeService = new EmployeeService(repository);
+        employeeService.create(employee1);
+        employeeService.create(employee2);
 
         //when
         //then
-        Assertions.assertEquals(expected, employeeService.search("male"));
+        Assertions.assertEquals(expected, employeeService.search("Male"));
     }
 }

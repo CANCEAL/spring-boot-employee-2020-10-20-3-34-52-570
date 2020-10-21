@@ -19,11 +19,6 @@ public class CompanyService {
         this.employeeRepository = employeeRepository;
     }
 
-    public CompanyService(CompanyRepository companyRepository) {
-        this.companyRepository = companyRepository;
-        this.employeeRepository = null;
-    }
-
     public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
         return employeeRepository.getAll().stream()
                 .filter(employee -> employee.getCompanyCode().equals(companyCode))

@@ -15,7 +15,8 @@ public class CompanyServiceTest {
     void should_return_companies_when_get_all() {
         // given
         CompanyRepository repository = new CompanyRepository();
-        CompanyService companyService = new CompanyService(repository);
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        CompanyService companyService = new CompanyService(repository, employeeRepository);
 
         Company firstCompany = new Company(123, "Microsoft", "Ayala");
         Company secondCompany = new Company(234, "MACROHARD", "Ayala");
@@ -33,9 +34,10 @@ public class CompanyServiceTest {
         //given
         Company newCompany = new Company(123, "Microsoft", "Ayala");
         CompanyRepository repository = new CompanyRepository();
+        EmployeeRepository employeeRepository = new EmployeeRepository();
 
         //when
-        CompanyService companyService = new CompanyService(repository);
+        CompanyService companyService = new CompanyService(repository, employeeRepository);
 
         //then
         Assertions.assertEquals(companyService.create(newCompany), newCompany);
@@ -46,7 +48,8 @@ public class CompanyServiceTest {
         // given
         Company newCompany = new Company(123, "Microsoft", "Ayala");
         CompanyRepository repository = new CompanyRepository();
-        CompanyService companyService = new CompanyService(repository);
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        CompanyService companyService = new CompanyService(repository, employeeRepository);
         companyService.create(newCompany);
 
         // when
@@ -60,7 +63,8 @@ public class CompanyServiceTest {
         Company updatedCompany = new Company(123, "MACROHARD", "Ayala");
         Company oldCompany = new Company(123, "Microsoft", "Ayala");
         CompanyRepository repository = new CompanyRepository();
-        CompanyService companyService = new CompanyService(repository);
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        CompanyService companyService = new CompanyService(repository, employeeRepository);
         companyService.create(oldCompany);
 
         //when

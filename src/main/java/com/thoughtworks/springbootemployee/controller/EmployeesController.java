@@ -4,16 +4,11 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
 public class EmployeesController {
-    // TODO remove later
-    private List<Employee> employees = new ArrayList<>();
-
     private final EmployeeService employeeService;
 
     public EmployeesController(EmployeeService employeeService) {

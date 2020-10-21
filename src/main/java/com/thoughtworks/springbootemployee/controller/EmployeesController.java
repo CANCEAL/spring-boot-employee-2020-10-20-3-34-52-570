@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
@@ -31,5 +32,32 @@ public class EmployeesController {
                 .orElse(null);
     }
 
+    @PutMapping(path = "/{id}")
+    public Employee updateEmployeeById(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
+        employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .ifPresent(employee -> {
+                    employees.remove(employee);
+                    employees.add(updatedEmployee);
+                });
+        return updatedEmployee;
+    }
 
+    @DeleteMapping(path = "/{id}")
+    public void deleteEmployeeById(@PathVariable Integer id) {
+        employees.stream()
+                .filter(employee -> employee.getId().equals(id))
+                .findFirst()
+                .ifPresent(employee -> {
+                    employees.remove(employee);
+                });
+    }
+
+    @GetMapping(params = "gender")
+    public List<Employee> getEmployeeByGender(@RequestParam("gender") String gender) {
+        return employees.stream()
+                .filter(employee -> employee.getGender().equals(gender))
+                .collect(Collectors.toList());
+    }
 }

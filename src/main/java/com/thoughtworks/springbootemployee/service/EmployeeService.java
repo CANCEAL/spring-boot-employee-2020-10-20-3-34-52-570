@@ -29,6 +29,6 @@ public class EmployeeService {
     }
 
     public void delete(int employeeId) {
-
+        repository.delete(employeeId);
     }
 }

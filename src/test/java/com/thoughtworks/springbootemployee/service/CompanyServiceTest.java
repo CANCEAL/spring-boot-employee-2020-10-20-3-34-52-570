@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -68,20 +70,50 @@ public class CompanyServiceTest {
     
     @Test
     void should_delete_employees_under_company_when_delete_given_company_id() {
-        // given
-        
-        // when
-        
-        // then
+        //given
+        Company company = new Company(123, "MACROHARD", "Ayala");
+        CompanyRepository companyRepository = new CompanyRepository();
+
+        Employee belongEmployee = new Employee(1, "Baron", 21, "Male", 2000, 123);
+        Employee otherEmployee = new Employee(2, "Maria", 16, "Female", 2000, 45);
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        employeeService.create(belongEmployee);
+        employeeService.create(otherEmployee);
+
+        CompanyService companyService = new CompanyService(companyRepository, employeeRepository);
+        companyService.create(company);
+
+        //when
+        companyService.delete(123);
+
+        //then
+        Assertions.assertEquals(1, companyService.getAll().size());
+        Assertions.assertEquals(1, employeeService.getAll().size());
+        Assertions.assertNull(employeeService.retrieve(1));
     }
 
     @Test
-    void should_list_all_employees_under_given_company_when_get_company_employees_given_company_id_and_header_employee() {
-        // given
-        
-        // when
-        
-        // then
+    void should_list_all_employees_under_given_company_when_get_company_employees_given_company_id_and_header_employees() {
+        //given
+        Company company = new Company(123, "MACROHARD", "Ayala");
+        CompanyRepository companyRepository = new CompanyRepository();
+
+        Employee belongEmployee = new Employee(1, "Baron", 21, "Male", 2000, 123);
+        Employee otherEmployee = new Employee(2, "Maria", 16, "Female", 2000, 45);
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        employeeService.create(belongEmployee);
+        employeeService.create(otherEmployee);
+
+        CompanyService companyService = new CompanyService(companyRepository, employeeRepository);
+        companyService.create(company);
+
+        //when
+        //then
+        Assertions.assertEquals(Arrays.asList(belongEmployee), companyService.getEmployeesUnderCompany(123));
     }
     
     @Test

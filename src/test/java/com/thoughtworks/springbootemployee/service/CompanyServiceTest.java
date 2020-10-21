@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class CompanyServiceTest {
 
@@ -123,9 +124,26 @@ public class CompanyServiceTest {
     @Test
     void should_display_2_companies_when_page_query_given_page_size_2_and_companies_are_4() {
         // given
-        
+        CompanyRepository repository = new CompanyRepository();
+        EmployeeRepository employeeRepository = new EmployeeRepository();
+        CompanyService companyService = new CompanyService(repository, employeeRepository);
+
+        Company firstCompany = new Company(123, "Microsoft", "Ayala");
+        Company secondCompany = new Company(234, "MACROHARD", "Ayala");
+        Company thirdCompany = new Company(556, "Oregon", "Ayala");
+        Company fourCompany = new Company(675, "Toshiba", "Ayala");
+
+        companyService.create(firstCompany);
+        companyService.create(secondCompany);
+        companyService.create(thirdCompany);
+        companyService.create(fourCompany);
+
         // when
-        
+        List<Company> actual = companyService.getByPage(0, 2);
+
         // then
+        Assertions.assertEquals(2, actual.size());
+        Assertions.assertTrue(actual.contains(firstCompany));
+        Assertions.assertTrue(actual.contains(secondCompany));
     }
 }

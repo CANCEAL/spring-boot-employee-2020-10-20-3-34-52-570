@@ -52,8 +52,11 @@ public class CompanyController {
         return updatedCompany;
     }
 
-    @DeleteMapping(path = "/{id}")
-    public void deleteCompanyById(@PathVariable Integer id) {
-        // TODO
+    @DeleteMapping(path = "/{code}")
+    public void deleteCompanyById(@PathVariable Integer code) {
+        companies.stream()
+                .filter(company -> company.getCode().equals(code))
+                .findFirst()
+                .ifPresent(company -> companies.remove(company));
     }
 }

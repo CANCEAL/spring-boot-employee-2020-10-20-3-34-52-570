@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,22 +11,35 @@ import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
-    private CompanyRepository repository;
+    private final CompanyRepository companyRepository;
+    private final EmployeeRepository employeeRepository;
 
-    public CompanyService(CompanyRepository repository) {
-        this.repository = repository;
+    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
+        this.companyRepository = companyRepository;
+        this.employeeRepository = employeeRepository;
+    }
+
+    public CompanyService(CompanyRepository companyRepository) {
+        this.companyRepository = companyRepository;
+        this.employeeRepository = null;
+    }
+
+    public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
+        return employeeRepository.getAll().stream()
+                .filter(employee -> employee.getCompanyCode().equals(companyCode))
+                .collect(Collectors.toList());
     }
 
     public List<Company> getAll() {
-        return repository.getAll();
+        return companyRepository.getAll();
     }
 
     public Company create(Company company) {
-        return repository.save(company);
+        return companyRepository.save(company);
     }
 
     public Company retrieve(Integer companyCode) {
-        List<Company> companies = repository.getAll();
+        List<Company> companies = companyRepository.getAll();
         return companies.stream()
                 .filter(company -> company.getCode().equals(companyCode))
                 .findFirst()
@@ -37,15 +52,15 @@ public class CompanyService {
     }
 
     public void delete(Integer companyCode) {
-        List<Company> companies = repository.getAll();
+        List<Company> companies = companyRepository.getAll();
         companies.stream()
                 .filter(company -> company.getCode().equals(companyCode))
                 .findFirst()
-                .ifPresent(company -> repository.delete(company));
+                .ifPresent(company -> companyRepository.delete(company));
     }
 
     public List<Company> getByPage(int page, int pageSize) {
-        return repository.getAll().stream()
+        return companyRepository.getAll().stream()
                 .skip(page * pageSize)
                 .limit(pageSize)
                 .collect(Collectors.toList());

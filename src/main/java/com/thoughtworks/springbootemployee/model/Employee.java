@@ -6,6 +6,7 @@ public class Employee {
     Integer age;
     String gender;
     Integer salary;
+    Integer companyCode;
 
     public Integer getId() {
         return id;
@@ -57,5 +58,18 @@ public class Employee {
 
     public Employee() {
 
+    }
+
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary, Integer companyCode) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.companyCode = companyCode;
+    }
+
+    public Integer getCompanyCode() {
+        return companyCode;
     }
 }

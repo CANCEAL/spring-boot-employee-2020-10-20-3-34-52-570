@@ -100,4 +100,26 @@ public class EmployeeServiceTest {
         //then
         Assertions.assertEquals(expected, employeeService.search("Male"));
     }
+
+    @Test
+    void should_display_2_employees_when_page_query_given_page_size_2_and_employees_are_4() {
+        // given
+        EmployeeRepository repository = new EmployeeRepository();
+        Employee employee1 = new Employee(1, "Alfred", 21, "Male", 1000, 123);
+        Employee employee2 = new Employee(1, "Baron", 21, "Male", 2000, 123);
+        Employee employee3 = new Employee(1, "Ana", 21, "Female", 3000, 123);
+        Employee employee4 = new Employee(1, "Marie", 21, "Female", 4000, 123);
+        List<Employee> expected = Arrays.asList(employee1, employee2);
+
+        // when
+        EmployeeService employeeService = new EmployeeService(repository);
+        employeeService.create(employee1);
+        employeeService.create(employee2);
+        employeeService.create(employee3);
+        employeeService.create(employee4);
+
+        // then
+        Assertions.assertEquals(expected.size(), employeeService.getByPage(1, 2).size());
+    }
+
 }

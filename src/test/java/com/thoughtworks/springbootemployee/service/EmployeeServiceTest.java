@@ -9,6 +9,7 @@ import org.mockito.Mockito;
 import java.util.Arrays;
 import java.util.List;
 
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class EmployeeServiceTest {
@@ -67,5 +68,22 @@ public class EmployeeServiceTest {
         //when
         //then
         Assertions.assertEquals(updatedEmployee, employeeService.update(1, updatedEmployee));
+    }
+
+    // If you don’t know how to mock delete method, try to search Mockito.verify()
+    @Test
+    void should_delete_employee_when_delete_given_employee_id() {
+        // given
+        Employee employee = new Employee(1, "Baron", 21, "Male", 2000);
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+
+        EmployeeService employeeService = new EmployeeService(repository);
+        employeeService.create(employee);
+
+        // when
+        employeeService.delete(1);
+        
+        // then
+        verify(repository).delete(1);
     }
 }

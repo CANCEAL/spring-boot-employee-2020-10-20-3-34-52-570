@@ -24,4 +24,8 @@ public class EmployeeRepository {
     public Employee update(Employee employee) {
         return null;
     }
+
+    public void delete(int employeeId) {
+
+    }
 }

@@ -59,10 +59,10 @@ public class EmployeeServiceTest {
     public void should_return_updated_employee_when_update_given_update_details() {
         //given
         Employee updatedEmployee = new Employee(1, "Baron", 21, "Male", 2000);
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        when(repository.update(updatedEmployee)).thenReturn(updatedEmployee);
-
+        Employee oldEmployee = new Employee(1, "Alfred", 21, "Male", 1000);
+        EmployeeRepository repository = new EmployeeRepository();
         EmployeeService employeeService = new EmployeeService(repository);
+        employeeService.create(oldEmployee);
 
         //when
         //then
@@ -74,7 +74,7 @@ public class EmployeeServiceTest {
     void should_delete_employee_when_delete_given_employee_id() {
         // given
         Employee employee = new Employee(1, "Baron", 21, "Male", 2000);
-        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        EmployeeRepository repository = new EmployeeRepository();
 
         EmployeeService employeeService = new EmployeeService(repository);
         employeeService.create(employee);
@@ -83,7 +83,7 @@ public class EmployeeServiceTest {
         employeeService.delete(1);
         
         // then
-        verify(repository).delete(1);
+        Assertions.assertEquals(0, employeeService.getAll().size());
     }
 
     @Test

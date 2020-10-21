@@ -32,16 +32,8 @@ public class EmployeeService {
     }
 
     public Employee update(Integer employeeId, Employee updatedEmployee) {
-        List<Employee> employees = repository.getAll();
-        employees.stream()
-                .filter(employee -> employee.getId().equals(employeeId))
-                .findFirst()
-                .ifPresent(employee -> {
-                        employees.remove(employee);
-                        employees.add(updatedEmployee);
-                });
-        repository.save(employees);
-        return updatedEmployee;
+        delete(employeeId);
+        return create(updatedEmployee);
     }
 
     public void delete(int employeeId) {

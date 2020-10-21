@@ -1,12 +1,17 @@
 package com.thoughtworks.springbootemployee.repository;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class EmployeeRepository {
+    private List<Employee> employeeList = new ArrayList<>();
+
     public List<Employee> getAll() {
-        return null;
+        return employeeList;
     }
 
     public Employee create() {

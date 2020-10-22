@@ -115,5 +115,16 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].salary").value(100));
     }
 
+    @Test
+    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
+        employeeRepository.save(employee);
 
+        //when
+        //then
+        mockMvc.perform(delete("/employees/{id}", employee.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").doesNotExist());
+    }
 }

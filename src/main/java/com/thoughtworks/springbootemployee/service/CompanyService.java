@@ -24,10 +24,10 @@ public class CompanyService {
     public List<Company> getAll() {
         return companyRepository.findAll();
     }
-//
-//    public Company create(Company company) {
-//        return companyRepository.save(company);
-//    }
+
+    public Company create(Company company) {
+        return companyRepository.save(company);
+    }
 //
 //    public Company retrieve(Integer companyCode) {
 //        List<Company> companies = companyRepository.getAll();

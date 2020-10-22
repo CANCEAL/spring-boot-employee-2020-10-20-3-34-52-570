@@ -20,11 +20,11 @@ public class CompanyController {
     public List<Company> getCompanies() {
         return companyService.getAll();
     }
-//
-//    @PostMapping
-//    public Company createCompany(@RequestBody Company company) {
-//        return companyService.create(company);
-//    }
+
+    @PostMapping
+    public Company createCompany(@RequestBody Company company) {
+        return companyService.create(company);
+    }
 //
 //    @GetMapping(path = "/{code}")
 //    public Company getCompanyByCode(@PathVariable Integer code) {

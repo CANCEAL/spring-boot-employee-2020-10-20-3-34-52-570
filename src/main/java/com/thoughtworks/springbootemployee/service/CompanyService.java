@@ -2,6 +2,8 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -50,11 +52,9 @@ public class CompanyService {
     public void delete(Integer companyCode) {
         companyRepository.deleteById(companyCode);
     }
-//
-//    public List<Company> getByPage(int page, int pageSize) {
-//        return companyRepository.getAll().stream()
-//                .skip(page * pageSize)
-//                .limit(pageSize)
-//                .collect(Collectors.toList());
-//    }
+
+    public List<Company> getByPage(int page, int pageSize) {
+        Pageable pageable = PageRequest.of(page,pageSize);
+        return companyRepository.findAll(pageable).toList();
+    }
 }

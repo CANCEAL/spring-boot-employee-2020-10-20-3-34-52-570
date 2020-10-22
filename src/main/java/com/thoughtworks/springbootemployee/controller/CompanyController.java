@@ -36,11 +36,11 @@ public class CompanyController {
 //        return companyService.getEmployeesUnderCompany(code);
 //    }
 //
-//    @GetMapping(params = {"page", "pageSize"})
-//    public List<Company> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-//        return companyService.getByPage(page, pageSize);
-//    }
-//
+    @GetMapping(params = {"page", "pageSize"})
+    public List<Company> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        return companyService.getByPage(page, pageSize);
+    }
+
     @PutMapping(path = "/{code}")
     public Company updateCompanyByCode(@PathVariable Integer code, @RequestBody Company updatedCompany) {
         companyService.update(code, updatedCompany);

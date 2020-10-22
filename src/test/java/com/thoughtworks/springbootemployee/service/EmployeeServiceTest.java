@@ -1,12 +1,13 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
@@ -14,7 +15,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static org.mockito.Mockito.when;
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.*;
 
 public class EmployeeServiceTest {
 
@@ -22,7 +24,7 @@ public class EmployeeServiceTest {
     void should_return_employees_when_get_all() {
         // given
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        List<Employee> expected = Arrays.asList(new Employee(), new Employee());
+        List<Employee> expected = asList(new Employee(), new Employee());
         when(repository.findAll()).thenReturn(expected);
 
         EmployeeService employeeService = new EmployeeService(repository);
@@ -79,25 +81,21 @@ public class EmployeeServiceTest {
 
     @Test
     void should_delete_employee_when_delete_given_employee_id() {
-        // given
-        Employee employee = new Employee(1, "Baron", 21, "Male", 2000, 1);
+        //given
+        Employee employee = new Employee(1, "Leo", 18, "male", 1000,1);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-
-        EmployeeService employeeService = new EmployeeService(repository);
-        employeeService.create(employee);
-
-        // when
-        employeeService.delete(1);
-
-        // then
-        Assertions.assertEquals(0, employeeService.getAll().size());
+        EmployeeService service = new EmployeeService(repository);
+        //when
+        service.delete(employee.getId());
+        //then
+        verify(repository,times(1)).deleteById(employee.getId());
     }
 
     @Test
     public void should_return_employees_when_searched_given_gender() {
         //given
         Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000,1 );
-        List<Employee> expected = Arrays.asList(employee1);
+        List<Employee> expected = asList(employee1);
 
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         when(repository.findByGender("Male")).thenReturn(expected);
@@ -109,27 +107,18 @@ public class EmployeeServiceTest {
         Assertions.assertEquals(expected, employeeService.search("Male"));
     }
 
-//    @Test
-//    void should_display_2_employees_when_page_query_given_page_size_2_and_employees_are_4() {
-//        // given
-//        Employee employee1 = new Employee(1, "Alfred", 21, "Male", 1000, 123);
-//        Employee employee2 = new Employee(2, "Baron", 21, "Male", 2000, 123);
-//        Employee employee3 = new Employee(3, "Ana", 21, "Female", 3000, 123);
-//        Employee employee4 = new Employee(4, "Marie", 21, "Female", 4000, 123);
-//        List<Employee> expected = Arrays.asList(employee1, employee2);
-//
-//
-//        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-//        when(repository.findAll(PageRequest.of(0,2)).toList()).thenReturn(expected);
-//
-//        // when
-//        EmployeeService employeeService = new EmployeeService(repository);
-//        employeeService.create(employee1);
-//        employeeService.create(employee2);
-//        employeeService.create(employee3);
-//        employeeService.create(employee4);
-//
-//        // then
-//        Assertions.assertEquals(expected.size(), employeeService.getByPage(1, 2).size());
-//    }
+    @Test
+    void should_get_page_when_get_page_given_employee() {
+        //given
+        List<Employee> expectedEmployee = asList(new Employee(),
+                new Employee());
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        Pageable pageable = PageRequest.of(0,2);
+        Page<Employee> page = new PageImpl<>(expectedEmployee);
+        when(repository.findAll(pageable)).thenReturn(page);
+        EmployeeService service = new EmployeeService(repository);
+        //when
+        //then
+        Assertions.assertEquals(2, service.getByPage(0,2).size());
+    }
 }

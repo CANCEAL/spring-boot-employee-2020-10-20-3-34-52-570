@@ -54,13 +54,14 @@ public class EmployeeService {
         Optional<Employee> employee = repository.findById(employeeId);
         employee.ifPresent(repository::delete);
     }
-//
-//    public List<Employee> search(String gender) {
+
+    public List<Employee> search(String gender) {
+        return repository.findByGender(gender);
 //        List<Employee> employees = repository.getAll();
 //        return employees.stream()
 //                .filter(employee -> employee.getGender().equals(gender))
 //                .collect(Collectors.toList());
-//    }
+    }
 //
 //    public List<Employee> getByPage(int page, int pageSize) {
 //        return repository.getAll().stream()

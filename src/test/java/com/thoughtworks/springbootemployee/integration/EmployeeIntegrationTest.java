@@ -73,4 +73,19 @@ public class EmployeeIntegrationTest {
         Assertions.assertEquals("Alfred", employees.get(0).getName());
     }
 
+    @Test
+    public void should_return_employee_when_get_given_employee_id() throws Exception {
+        //given
+        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
+        employeeRepository.save(employee);
+        //when
+        //then
+        mockMvc.perform(get("/employees/", employee.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].name").value("Prince"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(100));
+    }
 }

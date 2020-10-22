@@ -59,4 +59,21 @@ public class EmployeeServiceTest {
         // then
         Assertions.assertEquals(Optional.of(employee), employeeService.retrieve(1));
     }
+
+    @Test
+    public void should_return_updated_employee_when_update_given_update_details() {
+        //given
+        Employee employee = new Employee();
+        Employee updatedEmployee = new Employee(1, "Baron", 21, "Male", 2000, 1);
+        Employee oldEmployee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
+
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        when(repository.save(oldEmployee)).thenReturn(employee);
+
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //when
+        //then
+        Assertions.assertEquals(null, employeeService.update(1, updatedEmployee));
+    }
 }

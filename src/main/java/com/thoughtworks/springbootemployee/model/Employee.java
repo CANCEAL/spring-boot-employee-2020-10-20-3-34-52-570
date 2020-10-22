@@ -1,12 +1,30 @@
 package com.thoughtworks.springbootemployee.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Employee {
+    @Id
     Integer id;
     String name;
     Integer age;
     String gender;
     Integer salary;
-    Integer companyCode;
+    Integer company_code;
+
+    public void setCompany_code(Integer company_code) {
+        this.company_code = company_code;
+    }
+
+    public Employee(Integer id, String name, Integer age, String gender, Integer salary, Integer company_code) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.gender = gender;
+        this.salary = salary;
+        this.company_code = company_code;
+    }
 
     public Integer getId() {
         return id;
@@ -48,28 +66,11 @@ public class Employee {
         this.salary = salary;
     }
 
-    public Employee(Integer id, String name, Integer age, String gender, Integer salary) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-    }
-
     public Employee() {
 
     }
 
-    public Employee(Integer id, String name, Integer age, String gender, Integer salary, Integer companyCode) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-        this.gender = gender;
-        this.salary = salary;
-        this.companyCode = companyCode;
-    }
-
-    public Integer getCompanyCode() {
-        return companyCode;
+    public Integer getCompany_code() {
+        return company_code;
     }
 }

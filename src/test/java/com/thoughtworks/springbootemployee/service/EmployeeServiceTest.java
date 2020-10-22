@@ -31,4 +31,18 @@ public class EmployeeServiceTest {
         // then
         Assertions.assertEquals(expected, employeeService.getAll());
     }
+
+    @Test
+    public void should_return_employee_when_created_given_employee_details() {
+        //given
+        Employee newEmployee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+        when(repository.save(newEmployee)).thenReturn(newEmployee);
+
+        //when
+        EmployeeService employeeService = new EmployeeService(repository);
+
+        //then
+        Assertions.assertEquals(employeeService.create(newEmployee), newEmployee);
+    }
 }

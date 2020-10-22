@@ -46,9 +46,9 @@ public class CompanyController {
         companyService.update(code, updatedCompany);
         return updatedCompany;
     }
-//
-//    @DeleteMapping(path = "/{code}")
-//    public void deleteCompanyById(@PathVariable Integer code) {
-//        companyService.delete(code);
-//    }
+
+    @DeleteMapping(path = "/{code}")
+    public void deleteCompanyById(@PathVariable Integer code) {
+        companyService.delete(code);
+    }
 }

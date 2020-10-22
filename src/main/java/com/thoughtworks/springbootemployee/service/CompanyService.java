@@ -46,14 +46,10 @@ public class CompanyService {
         }
         return companyRepository.save(company);
     }
-//
-//    public void delete(Integer companyCode) {
-//        List<Employee> employees = employeeRepository.getAll().stream()
-//                .filter(employee -> employee.getCompanyCode().equals(companyCode))
-//                .collect(Collectors.toList());
-//
-//        employees.stream().forEach(employee -> employeeRepository.delete(employee));
-//    }
+
+    public void delete(Integer companyCode) {
+        companyRepository.deleteById(companyCode);
+    }
 //
 //    public List<Company> getByPage(int page, int pageSize) {
 //        return companyRepository.getAll().stream()

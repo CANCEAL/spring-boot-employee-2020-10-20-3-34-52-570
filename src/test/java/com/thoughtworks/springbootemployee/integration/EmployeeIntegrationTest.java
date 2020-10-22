@@ -1,6 +1,8 @@
 package com.thoughtworks.springbootemployee.integration;
 
+import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
@@ -24,16 +26,21 @@ public class EmployeeIntegrationTest {
     private EmployeeRepository employeeRepository;
 
     @Autowired
+    private CompanyRepository companyRepository;
+
+    @Autowired
     private MockMvc mockMvc;
 
     @AfterEach
     void tearDown() {
         employeeRepository.deleteAll();
+        companyRepository.deleteAll();
     }
 
     @Test
     public void should_return_correct_employee_when_put_given_employee() throws Exception {
         //given
+        Company company = new Company(1,"L","L");
         Employee oldEmployee = new Employee(1,"Prince",22,"Male",100,1);
         String newEmployeeAsJson = "{\n" +
                 "    \"id\": 1,\n" +
@@ -43,6 +50,7 @@ public class EmployeeIntegrationTest {
                 "    \"salary\": 500,\n" +
                 "    \"company_code\": 1\n" +
                 "}";
+        companyRepository.save(company);
         employeeRepository.save(oldEmployee);
 
         //when
@@ -61,6 +69,8 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_get_all_employees_when_get_all() throws Exception {
         //given
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
         Employee employee = new Employee(2,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
         //when
@@ -76,6 +86,8 @@ public class EmployeeIntegrationTest {
 
     @Test
     public void should_create_employee_when_create_given_employee_request() throws Exception {
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
         String employeeAsJson = "{\n" +
                 "    \"id\": 6,\n" +
                 "    \"name\": \"Alfred\",\n" +
@@ -102,6 +114,8 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_employee_when_get_given_employee_id() throws Exception {
         //given
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
         Employee employee = new Employee(3,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
         //when
@@ -118,19 +132,23 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_delete_employee_when_delete_given_employee_id() throws Exception {
         //given
-        Employee employee = new Employee(4,"Prince",22,"Male",100,1);
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
+        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
 
         //when
         //then
-        mockMvc.perform(delete("/employees/{id}", employee.getId()))
+        mockMvc.perform(delete("/employees/1"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].id").doesNotExist());
+                .andExpect(jsonPath("$.id").doesNotExist());
     }
 
     @Test
     public void should_return_male_employees_when_get_given_employee_gender() throws Exception {
         //given
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
         Employee employee1 = new Employee(5, "Prince",22,"Male",100,1);
         Employee employee2 = new Employee(7,"Ana",22,"Female",100,1);
         Employee employee3 = new Employee(8,"Alfred",22,"Male",100,1);
@@ -160,6 +178,8 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_2_employees_when_get_given_page_0_and_size_2() throws Exception {
         //given
+        Company company = new Company(1,"L","L");
+        companyRepository.save(company);
         Employee employee1 = new Employee(9,"Prince",22,"Male",100,1);
         Employee employee2 = new Employee(10,"Ana",22,"Female",100,1);
         Employee employee3 = new Employee(11,"Alfred",22,"Male",100,1);

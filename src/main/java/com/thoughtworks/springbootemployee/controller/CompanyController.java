@@ -1,11 +1,11 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/companies")
@@ -25,11 +25,11 @@ public class CompanyController {
     public Company createCompany(@RequestBody Company company) {
         return companyService.create(company);
     }
-//
-//    @GetMapping(path = "/{code}")
-//    public Company getCompanyByCode(@PathVariable Integer code) {
-//        return companyService.retrieve(code);
-//    }
+
+    @GetMapping(path = "/{code}")
+    public Optional<Company> getCompanyByCode(@PathVariable Integer code) {
+        return companyService.retrieve(code);
+    }
 //
 //    @GetMapping(path = "/{code}/employees")
 //    public List<Employee> getAllEmployeesUnderCompany(@PathVariable Integer code) {

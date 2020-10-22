@@ -2,10 +2,10 @@ package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.CompanyRepositoryLegacy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CompanyService {
@@ -28,14 +28,10 @@ public class CompanyService {
     public Company create(Company company) {
         return companyRepository.save(company);
     }
-//
-//    public Company retrieve(Integer companyCode) {
-//        List<Company> companies = companyRepository.getAll();
-//        return companies.stream()
-//                .filter(company -> company.getCode().equals(companyCode))
-//                .findFirst()
-//                .orElse(null);
-//    }
+
+    public Optional<Company> retrieve(Integer companyCode) {
+        return companyRepository.findById(companyCode);
+    }
 //
 //    public Company update(Integer companyCode, Company updatedCompany) {
 //        delete(companyCode);

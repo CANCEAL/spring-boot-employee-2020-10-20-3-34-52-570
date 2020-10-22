@@ -19,45 +19,45 @@ public class CompanyService {
         this.employeeRepository = employeeRepository;
     }
 
-    public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
-        return employeeRepository.getAll().stream()
-                .filter(employee -> employee.getCompanyCode().equals(companyCode))
-                .collect(Collectors.toList());
-    }
+//    public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
+//        return employeeRepository.getAll().stream()
+//                .filter(employee -> employee.getCompanyCode().equals(companyCode))
+//                .collect(Collectors.toList());
+//    }
 
-    public List<Company> getAll() {
-        return companyRepository.getAll();
-    }
-
-    public Company create(Company company) {
-        return companyRepository.save(company);
-    }
-
-    public Company retrieve(Integer companyCode) {
-        List<Company> companies = companyRepository.getAll();
-        return companies.stream()
-                .filter(company -> company.getCode().equals(companyCode))
-                .findFirst()
-                .orElse(null);
-    }
-
-    public Company update(Integer companyCode, Company updatedCompany) {
-        delete(companyCode);
-        return create(updatedCompany);
-    }
-
-    public void delete(Integer companyCode) {
-        List<Employee> employees = employeeRepository.getAll().stream()
-                .filter(employee -> employee.getCompanyCode().equals(companyCode))
-                .collect(Collectors.toList());
-
-        employees.stream().forEach(employee -> employeeRepository.delete(employee));
-    }
-
-    public List<Company> getByPage(int page, int pageSize) {
-        return companyRepository.getAll().stream()
-                .skip(page * pageSize)
-                .limit(pageSize)
-                .collect(Collectors.toList());
-    }
+//    public List<Company> getAll() {
+//        return companyRepository.getAll();
+//    }
+//
+//    public Company create(Company company) {
+//        return companyRepository.save(company);
+//    }
+//
+//    public Company retrieve(Integer companyCode) {
+//        List<Company> companies = companyRepository.getAll();
+//        return companies.stream()
+//                .filter(company -> company.getCode().equals(companyCode))
+//                .findFirst()
+//                .orElse(null);
+//    }
+//
+//    public Company update(Integer companyCode, Company updatedCompany) {
+//        delete(companyCode);
+//        return create(updatedCompany);
+//    }
+//
+//    public void delete(Integer companyCode) {
+//        List<Employee> employees = employeeRepository.getAll().stream()
+//                .filter(employee -> employee.getCompanyCode().equals(companyCode))
+//                .collect(Collectors.toList());
+//
+//        employees.stream().forEach(employee -> employeeRepository.delete(employee));
+//    }
+//
+//    public List<Company> getByPage(int page, int pageSize) {
+//        return companyRepository.getAll().stream()
+//                .skip(page * pageSize)
+//                .limit(pageSize)
+//                .collect(Collectors.toList());
+//    }
 }

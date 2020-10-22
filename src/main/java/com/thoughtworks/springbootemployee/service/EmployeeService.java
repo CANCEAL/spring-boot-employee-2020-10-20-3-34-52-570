@@ -49,14 +49,11 @@ public class EmployeeService {
         }
         return repository.save(employee);
     }
-//
-//    public void delete(int employeeId) {
-//        List<Employee> employees = repository.getAll();
-//        employees.stream()
-//                .filter(employee -> employee.getId().equals(employeeId))
-//                .findFirst()
-//                .ifPresent(employee -> repository.delete(employee));
-//    }
+
+    public void delete(int employeeId) {
+        Optional<Employee> employee = repository.findById(employeeId);
+        employee.ifPresent(repository::delete);
+    }
 //
 //    public List<Employee> search(String gender) {
 //        List<Employee> employees = repository.getAll();

@@ -35,11 +35,11 @@ public class EmployeesController {
     public Employee updateEmployeeById(@PathVariable Integer id, @RequestBody Employee updatedEmployee) {
         return employeeService.update(id, updatedEmployee);
     }
-//
-//    @DeleteMapping(path = "/{id}")
-//    public void deleteEmployeeById(@PathVariable Integer id) {
-//        employeeService.delete(id);
-//    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteEmployeeById(@PathVariable Integer id) {
+        employeeService.delete(id);
+    }
 //
 //    @GetMapping(params = "gender")
 //    public List<Employee> getEmployeeByGender(@RequestParam("gender") String gender) {

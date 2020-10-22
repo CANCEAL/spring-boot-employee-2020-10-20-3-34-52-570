@@ -16,10 +16,10 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-//    @GetMapping
-//    public List<Company> getCompanies() {
-//        return companyService.getAll();
-//    }
+    @GetMapping
+    public List<Company> getCompanies() {
+        return companyService.getAll();
+    }
 //
 //    @PostMapping
 //    public Company createCompany(@RequestBody Company company) {

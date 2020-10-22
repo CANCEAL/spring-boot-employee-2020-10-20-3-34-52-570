@@ -1,7 +1,21 @@
 package com.thoughtworks.springbootemployee.model;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 public class Company {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer code;
+    String name;
+    String location;
+    @OneToMany(
+            fetch = FetchType.EAGER,
+            orphanRemoval = true,
+            cascade = CascadeType.PERSIST
+    )
+    List<Employee> employees;
 
     public Integer getCode() {
         return code;
@@ -26,9 +40,6 @@ public class Company {
     public void setLocation(String location) {
         this.location = location;
     }
-
-    String name;
-    String location;
 
     public Company(Integer code, String name, String location) {
         this.code = code;

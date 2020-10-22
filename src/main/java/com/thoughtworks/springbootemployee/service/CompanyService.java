@@ -1,22 +1,18 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
-import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import com.thoughtworks.springbootemployee.repository.CompanyRepositoryLegacy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
     private final CompanyRepository companyRepository;
-    private final EmployeeRepository employeeRepository;
 
-    public CompanyService(CompanyRepository companyRepository, EmployeeRepository employeeRepository) {
+    public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
-        this.employeeRepository = employeeRepository;
     }
 
 //    public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
@@ -25,9 +21,9 @@ public class CompanyService {
 //                .collect(Collectors.toList());
 //    }
 
-//    public List<Company> getAll() {
-//        return companyRepository.getAll();
-//    }
+    public List<Company> getAll() {
+        return companyRepository.findAll();
+    }
 //
 //    public Company create(Company company) {
 //        return companyRepository.save(company);

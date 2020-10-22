@@ -61,7 +61,7 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_get_all_employees_when_get_all() throws Exception {
         //given
-        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
+        Employee employee = new Employee(2,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
         //when
         //then
@@ -102,7 +102,7 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_employee_when_get_given_employee_id() throws Exception {
         //given
-        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
+        Employee employee = new Employee(3,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
         //when
         //then
@@ -118,7 +118,7 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_delete_employee_when_delete_given_employee_id() throws Exception {
         //given
-        Employee employee = new Employee(1,"Prince",22,"Male",100,1);
+        Employee employee = new Employee(4,"Prince",22,"Male",100,1);
         employeeRepository.save(employee);
 
         //when
@@ -131,9 +131,9 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_male_employees_when_get_given_employee_gender() throws Exception {
         //given
-        Employee employee1 = new Employee(1, "Prince",22,"Male",100,1);
-        Employee employee2 = new Employee(2,"Ana",22,"Female",100,1);
-        Employee employee3 = new Employee(3,"Alfred",22,"Male",100,1);
+        Employee employee1 = new Employee(5, "Prince",22,"Male",100,1);
+        Employee employee2 = new Employee(7,"Ana",22,"Female",100,1);
+        Employee employee3 = new Employee(8,"Alfred",22,"Male",100,1);
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
         employeeRepository.save(employee3);
@@ -160,9 +160,9 @@ public class EmployeeIntegrationTest {
     @Test
     public void should_return_2_employees_when_get_given_page_0_and_size_2() throws Exception {
         //given
-        Employee employee1 = new Employee(1,"Prince",22,"Male",100,1);
-        Employee employee2 = new Employee(2,"Ana",22,"Female",100,1);
-        Employee employee3 = new Employee(3,"Alfred",22,"Male",100,1);
+        Employee employee1 = new Employee(9,"Prince",22,"Male",100,1);
+        Employee employee2 = new Employee(10,"Ana",22,"Female",100,1);
+        Employee employee3 = new Employee(11,"Alfred",22,"Male",100,1);
         employeeRepository.save(employee1);
         employeeRepository.save(employee2);
         employeeRepository.save(employee3);

@@ -1,139 +1,117 @@
 package com.thoughtworks.springbootemployee.service;
 
-public class CompanyServiceTest {
+import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
+import com.thoughtworks.springbootemployee.repository.CompanyRepository;
+import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-//    @Test
-//    void should_return_companies_when_get_all() {
-//        // given
-//        CompanyRepository repository = new CompanyRepository();
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//        CompanyService companyService = new CompanyService(repository, employeeRepository);
-//
-//        Company firstCompany = new Company(123, "Microsoft", "Ayala");
-//        Company secondCompany = new Company(234, "MACROHARD", "Ayala");
-//
-//        // when
-//        companyService.create(firstCompany);
-//        companyService.create(secondCompany);
-//
-//        // then
-//        Assertions.assertEquals(2, companyService.getAll().size());
-//    }
-//
-//    @Test
-//    public void should_return_company_when_created_given_company_details() {
-//        //given
-//        Company newCompany = new Company(123, "Microsoft", "Ayala");
-//        CompanyRepository repository = new CompanyRepository();
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//
-//        //when
-//        CompanyService companyService = new CompanyService(repository, employeeRepository);
-//
-//        //then
-//        Assertions.assertEquals(companyService.create(newCompany), newCompany);
-//    }
-//
-//    @Test
-//    void should_return_company_when_get_given_company_code() {
-//        // given
-//        Company newCompany = new Company(123, "Microsoft", "Ayala");
-//        CompanyRepository repository = new CompanyRepository();
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//        CompanyService companyService = new CompanyService(repository, employeeRepository);
-//        companyService.create(newCompany);
-//
-//        // when
-//        // then
-//        Assertions.assertEquals(newCompany, companyService.retrieve(123));
-//    }
-//
-//    @Test
-//    public void should_return_updated_company_when_update_given_update_details() {
-//        //given
-//        Company updatedCompany = new Company(123, "MACROHARD", "Ayala");
-//        Company oldCompany = new Company(123, "Microsoft", "Ayala");
-//        CompanyRepository repository = new CompanyRepository();
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//        CompanyService companyService = new CompanyService(repository, employeeRepository);
-//        companyService.create(oldCompany);
-//
-//        //when
-//        //then
-//        Assertions.assertEquals(updatedCompany, companyService.update(123, updatedCompany));
-//    }
-//
-//    @Test
-//    void should_delete_employees_under_company_when_delete_given_company_id() {
-//        //given
-//        Company company = new Company(123, "MACROHARD", "Ayala");
-//        CompanyRepository companyRepository = new CompanyRepository();
-//
-//        Employee belongEmployee = new Employee(1, "Baron", 21, "Male", 2000, 123);
-//        Employee otherEmployee = new Employee(2, "Maria", 16, "Female", 2000, 45);
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//
-//        EmployeeService employeeService = new EmployeeService(employeeRepository);
-//        employeeService.create(belongEmployee);
-//        employeeService.create(otherEmployee);
-//
-//        CompanyService companyService = new CompanyService(companyRepository, employeeRepository);
-//        companyService.create(company);
-//
-//        //when
-//        companyService.delete(123);
-//
-//        //then
-//        Assertions.assertEquals(1, companyService.getAll().size());
-//        Assertions.assertEquals(1, employeeService.getAll().size());
-//        Assertions.assertNull(employeeService.retrieve(1));
-//    }
-//
-//    @Test
-//    void should_list_all_employees_under_given_company_when_get_company_employees_given_company_id_and_header_employees() {
-//        //given
-//        Company company = new Company(123, "MACROHARD", "Ayala");
-//        CompanyRepository companyRepository = new CompanyRepository();
-//
-//        Employee belongEmployee = new Employee(1, "Baron", 21, "Male", 2000, 123);
-//        Employee otherEmployee = new Employee(2, "Maria", 16, "Female", 2000, 45);
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//
-//        EmployeeService employeeService = new EmployeeService(employeeRepository);
-//        employeeService.create(belongEmployee);
-//        employeeService.create(otherEmployee);
-//
-//        CompanyService companyService = new CompanyService(companyRepository, employeeRepository);
-//        companyService.create(company);
-//
-//        //when
-//        //then
-//        Assertions.assertEquals(Arrays.asList(belongEmployee), companyService.getEmployeesUnderCompany(123));
-//    }
-//
-//    @Test
-//    void should_display_2_companies_when_page_query_given_page_size_2_and_companies_are_4() {
-//        // given
-//        CompanyRepository repository = new CompanyRepository();
-//        EmployeeRepository employeeRepository = new EmployeeRepository();
-//        CompanyService companyService = new CompanyService(repository, employeeRepository);
-//
-//        Company firstCompany = new Company(123, "Microsoft", "Ayala");
-//        Company secondCompany = new Company(234, "MACROHARD", "Ayala");
-//        Company thirdCompany = new Company(556, "Oregon", "Ayala");
-//        Company fourCompany = new Company(675, "Toshiba", "Ayala");
-//
-//        companyService.create(firstCompany);
-//        companyService.create(secondCompany);
-//        companyService.create(thirdCompany);
-//        companyService.create(fourCompany);
-//
-//        // when
-//        List<Company> actual = companyService.getByPage(0, 2);
-//
-//        // then
-//        Assertions.assertEquals(2, actual.size());
-//        Assertions.assertTrue(actual.contains(firstCompany));
-//        Assertions.assertTrue(actual.contains(secondCompany));
-//    }
+import java.util.*;
+
+import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.Mockito.*;
+
+public class CompanyServiceTest {
+    private CompanyRepository repository = Mockito.mock(CompanyRepository.class);
+    private EmployeeRepository employeeRepository = Mockito.mock(EmployeeRepository.class);
+
+
+    @Test
+    void should_get_all_when_get_company() {
+        //given
+        List<Company> expectedCompany = asList(new Company(), new Company());
+        when(repository.findAll()).thenReturn(expectedCompany);
+        CompanyService service = new CompanyService(repository);
+
+        //when
+        List<Company> actual = service.getAll();
+
+        //given
+        assertEquals(2, actual.size());
+    }
+
+    @Test
+    void should_create_company_when_create_given_company() {
+        //given
+
+        Company company = new Company(1, "OOCL", "Pasay");
+        CompanyService service = new CompanyService(repository);
+        when(repository.save(company)).thenReturn(company);
+        //when
+        Company actual = service.create(company);
+        //then
+        assertEquals("OOCL", actual.getName());
+    }
+
+    @Test
+    void should_get_company_when_get_by_name_given_company_id() {
+        //given
+        Company company = new Company(1, "OOCL","Pasay");
+        when(repository.findById(1)).thenReturn(java.util.Optional.of(company));
+        CompanyService service = new CompanyService(repository);
+        //when
+        Optional<Company> actual = service.retrieve(1);
+        //then
+        assertEquals(company.getCode(), actual.get().getCode());
+    }
+
+    @Test
+    void should_get_list_of_employee_when_search_given_certain_company() {
+        //given
+        Company company = new Company(1, "OOCL","Pasay");
+        Employee employee = new Employee(1,"Prince",1,"Male",1,1);
+
+        when(employeeRepository.findByCompanyCode(1)).thenReturn(Collections.singletonList(employee));
+        EmployeeService employeeService = new EmployeeService(employeeRepository);
+        //when
+        List<Employee> actual = employeeService.getEmployeeByCompanyId(1);
+        //then
+        assertTrue(actual.contains(employee));
+    }
+
+    @Test
+    void should_update_company_when_update_by_company_id_given_company_id() {
+        //given
+        Company company = new Company(1, "OOCL","Pasay");
+        Company updateCompany = new Company(1, "COSCO", "Pasay");
+        when(repository.findById(1)).thenReturn(Optional.of(company));
+        when(repository.save(company)).thenReturn(updateCompany);
+        CompanyService service = new CompanyService(repository);
+        //when
+        Company actual = service.update(1, updateCompany);
+        //then
+        assertEquals(updateCompany, actual);
+    }
+
+    @Test
+    void should_delete_company_when_delete_by_company_id_given_company() {
+        //given
+        Company company = new Company(1, "OOCL","Pasay");
+        CompanyService service = new CompanyService(repository);
+        //when
+        service.delete(1);
+        //then
+        verify(repository, times(1)).deleteById(1);
+    }
+
+    @Test
+    void should_get_page_when_get_page_given_company() {
+        //given
+        List<Company> expectedCompany = asList(new Company(),
+                new Company());
+        Pageable pageable = PageRequest.of(0,2);
+        Page<Company> page = new PageImpl<>(expectedCompany);
+        when(repository.findAll(pageable)).thenReturn(page);
+        CompanyService service = new CompanyService(repository);
+        //when
+        //then
+        assertEquals(2, service.getByPage(0,2).size());
+    }
 }

@@ -53,8 +53,7 @@ public class EmployeeService {
     }
 
     public void delete(int employeeId) {
-        Optional<Employee> employee = repository.findById(employeeId);
-        employee.ifPresent(repository::delete);
+        repository.deleteById(employeeId);
     }
 
     public List<Employee> search(String gender) {

@@ -13,8 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -30,6 +29,33 @@ public class EmployeeIntegrationTest {
     @AfterEach
     void tearDown() {
         employeeRepository.deleteAll();
+    }
+
+    @Test
+    public void should_return_correct_employee_when_put_given_employee() throws Exception {
+        //given
+        Employee oldEmployee = new Employee(1,"Prince",22,"Male",100,1);
+        String newEmployeeAsJson = "{\n" +
+                "    \"id\": 1,\n" +
+                "    \"name\": \"Alfred\",\n" +
+                "    \"age\": 25,\n" +
+                "    \"gender\": \"male\",\n" +
+                "    \"salary\": 500,\n" +
+                "    \"company_code\": 1\n" +
+                "}";
+        employeeRepository.save(oldEmployee);
+
+        //when
+        //then
+        mockMvc.perform(put("/employees/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(newEmployeeAsJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Alfred"))
+                .andExpect(jsonPath("$.age").value(25))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(500));
     }
 
     @Test
@@ -88,4 +114,6 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].gender").value("Male"))
                 .andExpect(jsonPath("$[0].salary").value(100));
     }
+
+
 }

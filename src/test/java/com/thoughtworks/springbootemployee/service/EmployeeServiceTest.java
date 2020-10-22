@@ -76,4 +76,20 @@ public class EmployeeServiceTest {
         //then
         Assertions.assertEquals(null, employeeService.update(1, updatedEmployee));
     }
+
+    @Test
+    void should_delete_employee_when_delete_given_employee_id() {
+        // given
+        Employee employee = new Employee(1, "Baron", 21, "Male", 2000, 1);
+        EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
+
+        EmployeeService employeeService = new EmployeeService(repository);
+        employeeService.create(employee);
+
+        // when
+        employeeService.delete(1);
+
+        // then
+        Assertions.assertEquals(0, employeeService.getAll().size());
+    }
 }

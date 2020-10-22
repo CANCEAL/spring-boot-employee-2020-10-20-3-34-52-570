@@ -15,6 +15,7 @@ public class Company {
             orphanRemoval = true,
             cascade = CascadeType.PERSIST
     )
+    @JoinColumn(name = "company_code")
     List<Employee> employees;
 
     public Integer getCode() {

@@ -1,7 +1,9 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
+import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,9 +13,11 @@ import java.util.Optional;
 @RequestMapping("/companies")
 public class CompanyController {
     CompanyService companyService;
+    EmployeeService employeeService;
 
-    public CompanyController(CompanyService companyService) {
+    public CompanyController(CompanyService companyService, EmployeeService employeeService) {
         this.companyService = companyService;
+        this.employeeService = employeeService;
     }
 
     @GetMapping
@@ -30,12 +34,12 @@ public class CompanyController {
     public Optional<Company> getCompanyByCode(@PathVariable Integer code) {
         return companyService.retrieve(code);
     }
-//
-//    @GetMapping(path = "/{code}/employees")
-//    public List<Employee> getAllEmployeesUnderCompany(@PathVariable Integer code) {
-//        return companyService.getEmployeesUnderCompany(code);
-//    }
-//
+
+    @GetMapping(path = "/{code}/employees")
+    public List<Employee> getAllEmployeesUnderCompany(@PathVariable Integer companyCode) {
+        return employeeService.getEmployeeByCompanyId(companyCode);
+    }
+
     @GetMapping(params = {"page", "pageSize"})
     public List<Company> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
         return companyService.getByPage(page, pageSize);

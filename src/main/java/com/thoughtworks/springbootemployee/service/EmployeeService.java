@@ -29,6 +29,10 @@ public class EmployeeService {
         return repository.findById(employeeId);
     }
 
+    public List<Employee> getEmployeeByCompanyId(Integer companyCode) {
+        return repository.findByCompanyCode(companyCode);
+    }
+
     public Employee update(Integer employeeId, Employee updatedEmployee) {
         Employee employee = repository.findById(employeeId).orElse(null);
 

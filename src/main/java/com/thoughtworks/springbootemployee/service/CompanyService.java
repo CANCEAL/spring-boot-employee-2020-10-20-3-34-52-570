@@ -17,12 +17,6 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
-//    public List<Employee> getEmployeesUnderCompany (Integer companyCode) {
-//        return employeeRepository.getAll().stream()
-//                .filter(employee -> employee.getCompanyCode().equals(companyCode))
-//                .collect(Collectors.toList());
-//    }
-
     public List<Company> getAll() {
         return companyRepository.findAll();
     }

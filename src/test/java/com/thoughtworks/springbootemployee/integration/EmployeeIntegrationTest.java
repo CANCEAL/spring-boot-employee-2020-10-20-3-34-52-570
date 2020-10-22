@@ -156,4 +156,33 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[1].gender").value("Male"))
                 .andExpect(jsonPath("$[1].salary").value(100));
     }
+
+    @Test
+    public void should_return_2_employees_when_get_given_page_0_and_size_2() throws Exception {
+        //given
+        Employee employee1 = new Employee(1,"Prince",22,"Male",100,1);
+        Employee employee2 = new Employee(2,"Ana",22,"Female",100,1);
+        Employee employee3 = new Employee(3,"Alfred",22,"Male",100,1);
+        employeeRepository.save(employee1);
+        employeeRepository.save(employee2);
+        employeeRepository.save(employee3);
+
+        //when
+        //then
+        mockMvc.perform(get("/employees?page=0&pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].name").value("Prince"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(100));
+
+        mockMvc.perform(get("/employees?page=0&pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[2].id").doesNotExist())
+                .andExpect(jsonPath("$[2].name").doesNotExist())
+                .andExpect(jsonPath("$[2].age").doesNotExist())
+                .andExpect(jsonPath("$[2].gender").doesNotExist())
+                .andExpect(jsonPath("$[2].salary").doesNotExist());
+    }
 }

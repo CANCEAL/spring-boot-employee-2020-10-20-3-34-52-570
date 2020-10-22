@@ -29,8 +29,8 @@ public class EmployeeService {
         return repository.findById(employeeId);
     }
 
-    public List<Employee> getEmployeeByCompanyId(Integer companyCode) {
-        return repository.findByCompanyCode(companyCode);
+    public List<Employee> getEmployeeByCompanyId(Integer company_code) {
+        return repository.findByCompanyCode(company_code);
     }
 
     public Employee update(Integer employeeId, Employee updatedEmployee) {

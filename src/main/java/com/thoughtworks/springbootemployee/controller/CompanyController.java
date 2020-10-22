@@ -41,11 +41,11 @@ public class CompanyController {
 //        return companyService.getByPage(page, pageSize);
 //    }
 //
-//    @PutMapping(path = "/{code}")
-//    public Company updateCompanyByCode(@PathVariable Integer code, @RequestBody Company updatedCompany) {
-//        companyService.update(code, updatedCompany);
-//        return updatedCompany;
-//    }
+    @PutMapping(path = "/{code}")
+    public Company updateCompanyByCode(@PathVariable Integer code, @RequestBody Company updatedCompany) {
+        companyService.update(code, updatedCompany);
+        return updatedCompany;
+    }
 //
 //    @DeleteMapping(path = "/{code}")
 //    public void deleteCompanyById(@PathVariable Integer code) {

@@ -32,11 +32,20 @@ public class CompanyService {
     public Optional<Company> retrieve(Integer companyCode) {
         return companyRepository.findById(companyCode);
     }
-//
-//    public Company update(Integer companyCode, Company updatedCompany) {
-//        delete(companyCode);
-//        return create(updatedCompany);
-//    }
+
+    public Company update(Integer companyCode, Company updatedCompany) {
+        Company company = companyRepository.findById(companyCode).orElse(null);
+
+        if (company != null) {
+            if (updatedCompany.getName() != null) {
+                company.setName(updatedCompany.getName());
+            }
+            if (updatedCompany.getLocation() != null) {
+                company.setLocation(updatedCompany.getLocation());
+            }
+        }
+        return companyRepository.save(company);
+    }
 //
 //    public void delete(Integer companyCode) {
 //        List<Employee> employees = employeeRepository.getAll().stream()

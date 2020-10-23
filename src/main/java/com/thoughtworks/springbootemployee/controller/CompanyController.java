@@ -31,7 +31,7 @@ public class CompanyController {
     }
 
     @GetMapping(path = "/{code}")
-    public Optional<Company> getCompanyByCode(@PathVariable Integer code) {
+    public Company getCompanyByCode(@PathVariable Integer code) {
         return companyService.retrieve(code);
     }
 

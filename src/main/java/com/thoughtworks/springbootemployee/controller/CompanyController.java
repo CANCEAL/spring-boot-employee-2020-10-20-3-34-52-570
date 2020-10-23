@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
@@ -28,8 +29,8 @@ public class CompanyController {
     }
 
     @PostMapping
-    public Company createCompany(@RequestBody Company company) {
-        return companyService.create(company);
+    public CompanyResponse createCompany(@RequestBody CompanyRequest companyRequest) {
+        return companyService.create(companyRequest);
     }
 
     @GetMapping(path = "/{code}")

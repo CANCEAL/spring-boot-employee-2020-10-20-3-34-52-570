@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
@@ -22,14 +23,15 @@ public class CompanyService {
         this.companyMapper = new CompanyMapper();
     }
 
+    //TODO move to Controller
     public List<CompanyResponse> getAll() {
         List<Company> companies = companyRepository.findAll();
-        System.out.println("here is " + companies.size());
         return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
     }
 
-    public Company create(Company company) {
-        return companyRepository.save(company);
+    public CompanyResponse create(CompanyRequest companyRequest) {
+        Company createCompany = companyRepository.save(companyMapper.toEntity(companyRequest));
+        return companyMapper.toResponse(createCompany);
     }
 
     public Company retrieve(Integer companyCode) {

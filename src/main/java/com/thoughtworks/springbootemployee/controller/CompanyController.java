@@ -4,6 +4,7 @@ import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -41,14 +42,15 @@ public class CompanyController {
         return companyMapper.toResponse(company);
     }
 
-//    @GetMapping(path = "/{company_code}/employees")
-//    public List<Employee> getAllEmployeesUnderCompany(@PathVariable Integer company_code) {
-//        return employeeService.getEmployeeByCompanyId(company_code);
-//    }
+    @GetMapping({"/{companyID}/employee"})
+    public List<Employee> getEmployees(@PathVariable Integer companyID) {
+        return companyService.getCompanyEmployee(companyID);
+    }
 
     @GetMapping(params = {"page", "pageSize"})
-    public List<Company> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
-        return companyService.getByPage(page, pageSize);
+    public List<CompanyResponse> getByPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        List<Company> companies = companyService.getByPage(page, pageSize);
+        return companies.stream().map(companyMapper::toResponse).collect(Collectors.toList());
     }
 
     @PutMapping(path = "/{company_id}")
@@ -58,7 +60,7 @@ public class CompanyController {
     }
 
     @DeleteMapping(path = "/{company_id}")
-    public void deleteCompanyById(@PathVariable Integer code) {
-        companyService.delete(code);
+    public void deleteCompanyById(@PathVariable Integer company_id) {
+        companyService.delete(company_id);
     }
 }

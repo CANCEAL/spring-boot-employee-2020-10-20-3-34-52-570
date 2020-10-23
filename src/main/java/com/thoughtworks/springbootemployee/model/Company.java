@@ -39,5 +39,9 @@ public class Company {
         this.company_name = company_name;
     }
 
+    public List<Employee> getEmployeeList() {
+        return employees;
+    }
+
     public Company() {}
 }

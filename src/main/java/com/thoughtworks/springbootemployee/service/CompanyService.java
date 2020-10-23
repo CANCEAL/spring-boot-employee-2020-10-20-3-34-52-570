@@ -6,11 +6,13 @@ import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
 import com.thoughtworks.springbootemployee.exceptions.InvalidCompanyException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -43,6 +45,11 @@ public class CompanyService {
             }
         }
         return companyRepository.save(company);
+    }
+
+    public List<Employee> getCompanyEmployee(Integer companyID) {
+        return companyRepository.findById(companyID)
+                .map(Company::getEmployeeList).orElse(Collections.emptyList());
     }
 
     public void delete(Integer companyCode) {

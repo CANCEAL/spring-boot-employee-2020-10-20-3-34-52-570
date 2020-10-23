@@ -1,5 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -21,7 +23,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public List<Company> getCompanies() {
+    public List<CompanyResponse> getCompanies() {
         return companyService.getAll();
     }
 

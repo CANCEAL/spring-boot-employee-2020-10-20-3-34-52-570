@@ -1,7 +1,8 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
-import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import org.springframework.data.domain.PageRequest;
@@ -9,18 +10,22 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class CompanyService {
-    private final CompanyRepository companyRepository;
+    private CompanyRepository companyRepository;
+    private CompanyMapper companyMapper;
 
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
+        this.companyMapper = new CompanyMapper();
     }
 
-    public List<Company> getAll() {
-        return companyRepository.findAll();
+    public List<CompanyResponse> getAll() {
+        List<Company> companies = companyRepository.findAll();
+        System.out.println("here is " + companies.size());
+        return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
     }
 
     public Company create(Company company) {
@@ -50,7 +55,7 @@ public class CompanyService {
     }
 
     public List<Company> getByPage(int page, int pageSize) {
-        Pageable pageable = PageRequest.of(page,pageSize);
+        Pageable pageable = PageRequest.of(page, pageSize);
         return companyRepository.findAll(pageable).toList();
     }
 }

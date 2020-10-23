@@ -33,11 +33,6 @@ public class EmployeesController {
     @GetMapping(path = "/{id}")
     public Employee getEmployeeById(@PathVariable Integer id) {
         return employeeService.retrieve(id);
-//        try {
-//
-//        } catch (EmployeeNotFoundException exception) {
-//            return new EmployeeNotFoundException("ssasa");
-//        }
     }
 
     @PutMapping(path = "/{id}")

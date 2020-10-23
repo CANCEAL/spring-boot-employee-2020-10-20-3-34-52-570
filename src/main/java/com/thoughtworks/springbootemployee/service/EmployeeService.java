@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
+import com.thoughtworks.springbootemployee.exceptions.InvalidEmployeeException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
@@ -35,7 +36,8 @@ public class EmployeeService {
     }
 
     public Employee update(Integer employeeId, Employee updatedEmployee) {
-        Employee employee = repository.findById(employeeId).orElse(null);
+        Employee employee = repository.findById(employeeId)
+                .orElseThrow(() -> new InvalidEmployeeException("Employee " + employeeId + " is invalid!"));
 
         if (employee != null) {
             if (updatedEmployee.getName() != null) {

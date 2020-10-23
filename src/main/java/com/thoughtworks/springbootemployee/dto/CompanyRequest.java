@@ -1,18 +1,18 @@
 package com.thoughtworks.springbootemployee.dto;
 
 public class CompanyRequest {
-    String name;
+    String company_name;
 
-    public String getName() {
-        return name;
+    public String getCompany_name() {
+        return company_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 
-    public CompanyRequest(String name) {
-        this.name = name;
+    public CompanyRequest(String company_name) {
+        this.company_name = company_name;
     }
 
     public CompanyRequest() {

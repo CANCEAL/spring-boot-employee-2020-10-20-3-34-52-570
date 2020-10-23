@@ -7,45 +7,37 @@ import java.util.List;
 public class Company {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    Integer code;
-    String name;
-    String location;
+    Integer company_id;
+    String company_name;
+
     @OneToMany(
             fetch = FetchType.EAGER,
             orphanRemoval = true,
             cascade = CascadeType.PERSIST
     )
-    @JoinColumn(name = "company_code")
+    @JoinColumn(name = "company_id")
     List<Employee> employees;
 
-    public Integer getCode() {
-        return code;
+    public Integer getCompany_id() {
+        return company_id;
     }
 
-    public void setCode(Integer code) {
-        this.code = code;
+    public void setCompany_id(Integer company_id) {
+        this.company_id = company_id;
     }
 
-    public String getName() {
-        return name;
+    public String getCompany_name() {
+        return company_name;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setCompany_name(String company_name) {
+        this.company_name = company_name;
     }
 
-    public String getLocation() {
-        return location;
-    }
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public Company(Integer code, String name, String location) {
-        this.code = code;
-        this.name = name;
-        this.location = location;
+    public Company(Integer company_id, String company_name) {
+        this.company_id = company_id;
+        this.company_name = company_name;
     }
 
     public Company() {}

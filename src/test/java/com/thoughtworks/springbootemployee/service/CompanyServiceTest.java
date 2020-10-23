@@ -68,7 +68,8 @@
 //        Company company = new Company(1, "OOCL","Pasay");
 //        Employee employee = new Employee(1,"Prince",1,"Male",1,1);
 //
-//        when(employeeRepository.findByCompanyCode(1)).thenReturn(Collections.singletonList(employee));
+//        when(employeeRepository.findByCompanyCode(1)).thenReturn(Collections.
+//        singletonList(employee));
 //        EmployeeService employeeService = new EmployeeService(employeeRepository);
 //        //when
 //        List<Employee> actual = employeeService.getEmployeeByCompanyId(1);

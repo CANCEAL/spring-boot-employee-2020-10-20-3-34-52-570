@@ -7,39 +7,29 @@ import java.util.List;
 
 public class CompanyResponse {
 
-    Integer code;
-    String name;
-    String location;
-    List<Employee> employees;
+    Integer company_id;
+    String company_name;
 
     public Integer getCode() {
-        return code;
+        return company_id;
     }
 
     public void setCode(Integer code) {
-        this.code = code;
+        this.company_id = code;
     }
 
     public String getName() {
-        return name;
+        return company_name;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.company_name = name;
     }
 
-    public String getLocation() {
-        return location;
-    }
+    public CompanyResponse(Integer code, String name) {
+        this.company_id = code;
+        this.company_name = name;
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public CompanyResponse(Integer code, String name, String location) {
-        this.code = code;
-        this.name = name;
-        this.location = location;
     }
 
     public CompanyResponse() {}

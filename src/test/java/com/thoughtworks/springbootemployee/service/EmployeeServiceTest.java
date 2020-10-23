@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.service;
 
-import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Assertions;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -82,19 +80,19 @@ public class EmployeeServiceTest {
     @Test
     void should_delete_employee_when_delete_given_employee_id() {
         //given
-        Employee employee = new Employee(1, "Leo", 18, "male", 1000,1);
+        Employee employee = new Employee(1, "Leo", 18, "male", 1000, 1);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         EmployeeService service = new EmployeeService(repository);
         //when
         service.delete(employee.getId());
         //then
-        verify(repository,times(1)).deleteById(employee.getId());
+        verify(repository, times(1)).deleteById(employee.getId());
     }
 
     @Test
     public void should_return_employees_when_searched_given_gender() {
         //given
-        Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000,1 );
+        Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000, 1);
         List<Employee> expected = asList(employee1);
 
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
@@ -113,12 +111,12 @@ public class EmployeeServiceTest {
         List<Employee> expectedEmployee = asList(new Employee(),
                 new Employee());
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        Pageable pageable = PageRequest.of(0,2);
+        Pageable pageable = PageRequest.of(0, 2);
         Page<Employee> page = new PageImpl<>(expectedEmployee);
         when(repository.findAll(pageable)).thenReturn(page);
         EmployeeService service = new EmployeeService(repository);
         //when
         //then
-        Assertions.assertEquals(2, service.getByPage(0,2).size());
+        Assertions.assertEquals(2, service.getByPage(0, 2).size());
     }
 }

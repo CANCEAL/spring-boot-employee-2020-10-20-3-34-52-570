@@ -3,6 +3,7 @@ package com.thoughtworks.springbootemployee.service;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
+import com.thoughtworks.springbootemployee.exceptions.InvalidCompanyException;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
@@ -29,9 +30,8 @@ public class CompanyService {
         return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
     }
 
-    public CompanyResponse create(CompanyRequest companyRequest) {
-        Company createCompany = companyRepository.save(companyMapper.toEntity(companyRequest));
-        return companyMapper.toResponse(createCompany);
+    public Company create(Company company) {
+        return companyRepository.save(company);
     }
 
     public Company retrieve(Integer companyCode) {
@@ -39,14 +39,11 @@ public class CompanyService {
     }
 
     public Company update(Integer companyCode, Company updatedCompany) {
-        Company company = companyRepository.findById(companyCode).orElse(null);
-
+        Company company = companyRepository.findById(companyCode)
+                .orElseThrow(() -> new InvalidCompanyException("Company " + companyCode + " is invalid!"));;
         if (company != null) {
-            if (updatedCompany.getName() != null) {
-                company.setName(updatedCompany.getName());
-            }
-            if (updatedCompany.getLocation() != null) {
-                company.setLocation(updatedCompany.getLocation());
+            if (updatedCompany.getCompany_name() != null) {
+                company.setCompany_name(updatedCompany.getCompany_name());
             }
         }
         return companyRepository.save(company);

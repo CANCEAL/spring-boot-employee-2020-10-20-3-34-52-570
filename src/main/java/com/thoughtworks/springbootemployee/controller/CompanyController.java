@@ -26,11 +26,6 @@ public class CompanyController {
     public List<CompanyResponse> getCompanies() {
         List<Company> companies = companyService.getAll();
         return companies.stream().map(companyMapper::toResponse).collect(Collectors.toList());
-//
-//        List<Company> companies = ;
-//        return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
-//
-//        return companyService.getAll();
     }
 
     @PostMapping
@@ -57,8 +52,9 @@ public class CompanyController {
     }
 
     @PutMapping(path = "/{company_id}")
-    public Company updateCompanyByCode(@PathVariable Integer code, @RequestBody Company updatedCompany) {
-        return companyService.update(code, updatedCompany);
+    public CompanyResponse updateCompanyById(@PathVariable Integer company_id, @RequestBody CompanyRequest companyRequest) {
+        Company company = companyService.update(company_id, companyMapper.toEntity(companyRequest));
+        return companyMapper.toResponse(company);
     }
 
     @DeleteMapping(path = "/{company_id}")

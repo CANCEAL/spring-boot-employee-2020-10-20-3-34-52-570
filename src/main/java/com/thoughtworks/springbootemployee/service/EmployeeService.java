@@ -31,23 +31,23 @@ public class EmployeeService {
                 .orElseThrow(() -> new EmployeeNotFoundException("Employee not found!"));
     }
 
-    public List<Employee> getEmployeeByCompanyId(Integer company_code) {
-        return repository.findByCompanyCode(company_code);
-    }
+//    public List<Employee> getEmployeeByCompanyId(Integer company_id) {
+//        return repository.findByCompanyCode(company_id);
+//    }
 
     public Employee update(Integer employeeId, Employee updatedEmployee) {
         Employee employee = repository.findById(employeeId)
                 .orElseThrow(() -> new InvalidEmployeeException("Employee " + employeeId + " is invalid!"));
 
         if (employee != null) {
-            if (updatedEmployee.getName() != null) {
-                employee.setName(updatedEmployee.getName());
+            if (updatedEmployee.getEmployee_name() != null) {
+                employee.setEmployee_name(updatedEmployee.getEmployee_name());
             }
             if (updatedEmployee.getAge() != null) {
                 employee.setAge(updatedEmployee.getAge());
             }
-            if (updatedEmployee.getCompany_code() != null) {
-                employee.setCompany_code(updatedEmployee.getCompany_code());
+            if (updatedEmployee.getCompany_id() != null) {
+                employee.setCompany_id(updatedEmployee.getCompany_id());
             }
             if (updatedEmployee.getGender() != null) {
                 employee.setGender(updatedEmployee.getGender());

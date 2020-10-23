@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -23,20 +24,25 @@ public class CompanyController {
 
     @GetMapping
     public List<CompanyResponse> getCompanies() {
-        return companyService.getAll();
+        List<Company> companies = companyService.getAll();
+        return companies.stream().map(companyMapper::toResponse).collect(Collectors.toList());
+//
+//        List<Company> companies = ;
+//        return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
+//
+//        return companyService.getAll();
     }
 
     @PostMapping
     @ResponseStatus(code = HttpStatus.CREATED)
     public CompanyResponse createCompany(@RequestBody CompanyRequest companyRequest) {
         Company company = companyService.create(companyMapper.toEntity(companyRequest));
-        System.out.println("beee"+companyRequest.getCompany_name());
         return companyMapper.toResponse(company);
     }
 
     @GetMapping(path = "/{company_id}")
-    public Company getCompanyByCode(@PathVariable Integer code) {
-        return companyService.retrieve(code);
+    public Company getCompanyByCode(@PathVariable Integer company_id) {
+        return companyService.retrieve(company_id);
     }
 
 //    @GetMapping(path = "/{company_code}/employees")

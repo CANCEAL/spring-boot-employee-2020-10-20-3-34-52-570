@@ -17,17 +17,13 @@ import java.util.stream.Collectors;
 @Service
 public class CompanyService {
     private CompanyRepository companyRepository;
-    private CompanyMapper companyMapper;
 
     public CompanyService(CompanyRepository companyRepository) {
         this.companyRepository = companyRepository;
-        this.companyMapper = new CompanyMapper();
     }
 
-    //TODO move to Controller
-    public List<CompanyResponse> getAll() {
-        List<Company> companies = companyRepository.findAll();
-        return companies.stream().map(company -> companyMapper.toResponse(company)).collect(Collectors.toList());
+    public List<Company> getAll() {
+        return companyRepository.findAll();
     }
 
     public Company create(Company company) {

@@ -9,7 +9,6 @@ public class Company {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer company_id;
     String company_name;
-
     @OneToMany(
             fetch = FetchType.EAGER,
             orphanRemoval = true,

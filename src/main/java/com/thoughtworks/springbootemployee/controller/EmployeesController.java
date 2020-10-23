@@ -1,8 +1,10 @@
 package com.thoughtworks.springbootemployee.controller;
 
+import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.EmployeeService;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,8 +31,13 @@ public class EmployeesController {
     }
 
     @GetMapping(path = "/{id}")
-    public Optional<Employee> getEmployeeById(@PathVariable Integer id) {
+    public Employee getEmployeeById(@PathVariable Integer id) {
         return employeeService.retrieve(id);
+//        try {
+//
+//        } catch (EmployeeNotFoundException exception) {
+//            return new EmployeeNotFoundException("ssasa");
+//        }
     }
 
     @PutMapping(path = "/{id}")

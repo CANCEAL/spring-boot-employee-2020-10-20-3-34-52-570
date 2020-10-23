@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.exceptions.EmployeeNotFoundException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.springframework.data.domain.PageRequest;
@@ -7,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -25,8 +25,9 @@ public class EmployeeService {
         return repository.save(employee);
     }
 
-    public Optional<Employee> retrieve(Integer employeeId) {
-        return repository.findById(employeeId);
+    public Employee retrieve(Integer employeeId) {
+        return repository.findById(employeeId)
+                .orElseThrow(() -> new EmployeeNotFoundException("Employee not found!"));
     }
 
     public List<Employee> getEmployeeByCompanyId(Integer company_code) {

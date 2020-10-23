@@ -17,6 +17,13 @@ public class Company {
     @JoinColumn(name = "company_id")
     List<Employee> employees;
 
+    public Company(Integer company_id, String company_name) {
+        this.company_id = company_id;
+        this.company_name = company_name;
+    }
+
+    public Company() {}
+
     public Integer getCompany_id() {
         return company_id;
     }
@@ -33,15 +40,11 @@ public class Company {
         this.company_name = company_name;
     }
 
-
-    public Company(Integer company_id, String company_name) {
-        this.company_id = company_id;
-        this.company_name = company_name;
-    }
-
     public List<Employee> getEmployeeList() {
         return employees;
     }
 
-    public Company() {}
+    public int getEmployeeCount() {
+        return employees.size();
+    }
 }

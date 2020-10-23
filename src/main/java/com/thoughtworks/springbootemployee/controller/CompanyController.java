@@ -2,7 +2,9 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
+import com.thoughtworks.springbootemployee.dto.EmployeeResponse;
 import com.thoughtworks.springbootemployee.mapper.CompanyMapper;
+import com.thoughtworks.springbootemployee.mapper.EmployeeMapper;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.service.CompanyService;
@@ -17,10 +19,12 @@ import java.util.stream.Collectors;
 public class CompanyController {
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
+    EmployeeMapper employeeMapper;
 
-    public CompanyController(CompanyService companyService, CompanyMapper companyMapper) {
+    public CompanyController(CompanyService companyService, CompanyMapper companyMapper, EmployeeMapper employeeMapper) {
         this.companyService = companyService;
         this.companyMapper = companyMapper;
+        this.employeeMapper = employeeMapper;
     }
 
     @GetMapping
@@ -42,9 +46,10 @@ public class CompanyController {
         return companyMapper.toResponse(company);
     }
 
-    @GetMapping({"/{companyID}/employee"})
-    public List<Employee> getEmployees(@PathVariable Integer companyID) {
-        return companyService.getCompanyEmployee(companyID);
+    @GetMapping({"/{companyID}/employees"})
+    public List<EmployeeResponse> getEmployees(@PathVariable Integer companyID) {
+        List<Employee> employees = companyService.getCompanyEmployee(companyID);
+        return employees.stream().map(employee -> employeeMapper.toResponse(employee)).collect(Collectors.toList());
     }
 
     @GetMapping(params = {"page", "pageSize"})

@@ -106,4 +106,68 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].gender").value("Male"))
                 .andExpect(jsonPath("$[0].salary").value(100));
     }
+
+    @Test
+    public void should_delete_employee_when_delete_given_employee_id() throws Exception {
+        //given
+        Employee employee = employeeRepository.save(new Employee(2, "Leo", 22, "Male", 100));
+
+        //when
+        //then
+        mockMvc.perform(delete("/employees/{id}", employee.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").doesNotExist());
+    }
+
+    @Test
+    public void should_return_male_employees_when_get_given_employee_gender() throws Exception {
+        //given
+        Employee employee1 = employeeRepository.save(new Employee(1, "Leo", 22, "Male", 100));
+        employeeRepository.save(new Employee(2, "Ana", 22, "Female", 100));
+        employeeRepository.save(new Employee(3, "Alfred", 22, "Male", 100));
+
+        //when
+        //then
+        mockMvc.perform(get("/employees?gender={gender}", employee1.getGender()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].employee_name").value("Leo"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(100));
+
+        mockMvc.perform(get("/employees?gender={gender}", employee1.getGender()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[1].id").isNumber())
+                .andExpect(jsonPath("$[1].employee_name").value("Alfred"))
+                .andExpect(jsonPath("$[1].age").value(22))
+                .andExpect(jsonPath("$[1].gender").value("Male"))
+                .andExpect(jsonPath("$[1].salary").value(100));
+    }
+
+    @Test
+    public void should_return_2_employees_when_get_given_page_0_and_size_2() throws Exception {
+        //given
+        employeeRepository.save(new Employee(1, "Leo", 22, "Male", 100));
+        employeeRepository.save(new Employee(2, "Ana", 22, "Female", 100));
+        employeeRepository.save(new Employee(3, "Alfred", 22, "Male", 100));
+
+        //when
+        //then
+        mockMvc.perform(get("/employees?page=0&pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].employee_name").value("Leo"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(100));
+
+        mockMvc.perform(get("/employees?page=0&pageSize=2"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[2].id").doesNotExist())
+                .andExpect(jsonPath("$[2].employee_name").doesNotExist())
+                .andExpect(jsonPath("$[2].age").doesNotExist())
+                .andExpect(jsonPath("$[2].gender").doesNotExist())
+                .andExpect(jsonPath("$[2].salary").doesNotExist());
+    }
 }

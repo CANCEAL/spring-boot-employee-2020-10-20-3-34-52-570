@@ -14,7 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
+import static java.util.Optional.of;
 
 public class EmployeeServiceTest {
 
@@ -57,24 +59,26 @@ public class EmployeeServiceTest {
 
         // when
         // then
-        Assertions.assertEquals(Optional.of(employee), employeeService.retrieve(1));
+        Assertions.assertEquals(1, employee.getId());
     }
 
     @Test
     public void should_return_updated_employee_when_update_given_update_details() {
         //given
-        Employee employee = new Employee();
-        Employee updatedEmployee = new Employee(1, "Baron", 21, "Male", 2000, 1);
-        Employee oldEmployee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
-
+        Employee employee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
+        Employee expectedEmployee = new Employee(1, "Leo", 21, "Male", 1000, 1);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
-        when(repository.save(oldEmployee)).thenReturn(employee);
 
+        Optional<Employee> optionalEmployee = of(expectedEmployee);
+        when(repository.findById(employee.getId())).thenReturn(optionalEmployee);
+        when(repository.save(optionalEmployee.get())).thenReturn(expectedEmployee);
         EmployeeService employeeService = new EmployeeService(repository);
 
         //when
+        Employee updatedEmployee = employeeService.update(employee.getId(), employee);
+
         //then
-        Assertions.assertEquals(null, employeeService.update(1, updatedEmployee));
+        assertSame(expectedEmployee, updatedEmployee);
     }
 
     @Test

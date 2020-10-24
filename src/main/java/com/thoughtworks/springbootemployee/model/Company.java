@@ -11,7 +11,6 @@ public class Company {
     String company_name;
     @OneToMany(
             fetch = FetchType.EAGER,
-            orphanRemoval = true,
             cascade = CascadeType.PERSIST
     )
     @JoinColumn(name = "company_id")

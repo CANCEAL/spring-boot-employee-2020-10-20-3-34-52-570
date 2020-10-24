@@ -16,13 +16,12 @@ public class Employee {
     Integer salary;
     Integer company_id;
 
-    public Employee(Integer id, String employee_name, Integer age, String gender, Integer salary, Integer company_id) {
+    public Employee(Integer id, String employee_name, Integer age, String gender, Integer salary) {
         this.id = id;
         this.employee_name = employee_name;
         this.age = age;
         this.gender = gender;
         this.salary = salary;
-        this.company_id = company_id;
     }
 
     public Employee() {

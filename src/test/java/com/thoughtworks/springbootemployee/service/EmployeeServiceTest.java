@@ -37,7 +37,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employee_when_created_given_employee_details() {
         //given
-        Employee newEmployee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
+        Employee newEmployee = new Employee(1, "Alfred", 21, "Male", 1000);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         when(repository.save(newEmployee)).thenReturn(newEmployee);
 
@@ -51,7 +51,7 @@ public class EmployeeServiceTest {
     @Test
     void should_return_employee_when_get_given_employee_id() {
         // given
-        Employee employee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
+        Employee employee = new Employee(1, "Alfred", 21, "Male", 1000);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         when(repository.findById(employee.getId())).thenReturn(Optional.of(employee));
 
@@ -65,8 +65,8 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_updated_employee_when_update_given_update_details() {
         //given
-        Employee employee = new Employee(1, "Alfred", 21, "Male", 1000, 1);
-        Employee expectedEmployee = new Employee(1, "Leo", 21, "Male", 1000, 1);
+        Employee employee = new Employee(1, "Alfred", 21, "Male", 1000);
+        Employee expectedEmployee = new Employee(1, "Leo", 21, "Male", 1000);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
 
         Optional<Employee> optionalEmployee = of(expectedEmployee);
@@ -84,7 +84,7 @@ public class EmployeeServiceTest {
     @Test
     void should_delete_employee_when_delete_given_employee_id() {
         //given
-        Employee employee = new Employee(1, "Leo", 18, "male", 1000, 1);
+        Employee employee = new Employee(1, "Leo", 18, "male", 1000);
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);
         EmployeeService service = new EmployeeService(repository);
         //when
@@ -96,7 +96,7 @@ public class EmployeeServiceTest {
     @Test
     public void should_return_employees_when_searched_given_gender() {
         //given
-        Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000, 1);
+        Employee employee1 = new Employee(1, "Baron", 21, "Male", 2000);
         List<Employee> expected = asList(employee1);
 
         EmployeeRepository repository = Mockito.mock(EmployeeRepository.class);

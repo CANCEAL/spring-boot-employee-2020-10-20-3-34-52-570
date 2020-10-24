@@ -39,35 +39,25 @@ public class EmployeeIntegrationTest {
         companyRepository.deleteAll();
     }
 
-//    @Test
-//    public void should_return_correct_employee_when_put_given_employee() throws Exception {
-//        //given
-//        Company company = new Company(1, "L", "L");
-//        Employee oldEmployee = new Employee(1, "Prince", 22, "Male", 100, 1);
-//        String newEmployeeAsJson = "{\n" +
-//                "    \"id\": 1,\n" +
-//                "    \"name\": \"Alfred\",\n" +
-//                "    \"age\": 25,\n" +
-//                "    \"gender\": \"male\",\n" +
-//                "    \"salary\": 500,\n" +
-//                "    \"company_code\": 1\n" +
-//                "}";
-//        companyRepository.save(company);
-//        employeeRepository.save(oldEmployee);
-//
-//        //when
-//        //then
-//        mockMvc.perform(put("/employees/1")
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .content(newEmployeeAsJson))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.id").isNumber())
-//                .andExpect(jsonPath("$.name").value("Alfred"))
-//                .andExpect(jsonPath("$.age").value(25))
-//                .andExpect(jsonPath("$.gender").value("male"))
-//                .andExpect(jsonPath("$.salary").value(500));
-//    }
-//
+
+
+    @Test
+    public void should_return_correct_employee_when_put_given_employee() throws Exception {
+        //given
+        Company company = new Company(4,"OOCL");
+        Employee employee = new Employee(4, "Leo", 18, "male", 1000, 4);
+        employeeRepository.save(employee);
+        // when then
+        mockMvc.perform(get("/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.name").value("Leo"))
+                .andExpect(jsonPath("$.age").value(18))
+                .andExpect(jsonPath("$.gender").value("male"))
+                .andExpect(jsonPath("$.salary").value(1000))
+                .andExpect(jsonPath("$.company_id").value(4));
+    }
+
 //    @Test
 //    public void should_get_all_employees_when_get_all() throws Exception {
 //        //given

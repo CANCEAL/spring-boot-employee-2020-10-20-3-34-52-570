@@ -1,7 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.repository.CompanyRepository;
 import com.thoughtworks.springbootemployee.repository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -11,10 +10,12 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
 
 public class CompanyServiceTest {
@@ -106,12 +107,12 @@ public class CompanyServiceTest {
         //given
         List<Company> expectedCompany = asList(new Company(),
                 new Company());
-        Pageable pageable = PageRequest.of(0,2);
+        Pageable pageable = PageRequest.of(0, 2);
         Page<Company> page = new PageImpl<>(expectedCompany);
         when(repository.findAll(pageable)).thenReturn(page);
         CompanyService service = new CompanyService(repository);
         //when
         //then
-        assertEquals(2, service.getByPage(0,2).size());
+        assertEquals(2, service.getByPage(0, 2).size());
     }
 }

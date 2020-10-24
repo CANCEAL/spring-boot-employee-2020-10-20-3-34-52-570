@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.service;
 
+import com.thoughtworks.springbootemployee.advice.TrackExecutionTime;
 import com.thoughtworks.springbootemployee.dto.CompanyRequest;
 import com.thoughtworks.springbootemployee.dto.CompanyResponse;
 import com.thoughtworks.springbootemployee.exceptions.CompanyNotFoundException;
@@ -24,14 +25,16 @@ public class CompanyService {
         this.companyRepository = companyRepository;
     }
 
+    @TrackExecutionTime
     public List<Company> getAll() {
         return companyRepository.findAll();
     }
-
+    @TrackExecutionTime
     public Company create(Company company) {
         return companyRepository.save(company);
     }
 
+    @TrackExecutionTime
     public Company retrieve(Integer companyCode) {
         return companyRepository.findById(companyCode).orElseThrow(() -> new CompanyNotFoundException("Company not found"));
     }

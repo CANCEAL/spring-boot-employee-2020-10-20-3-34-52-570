@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.Arrays.asList;
+import static java.util.Optional.of;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.mockito.Mockito.*;
-import static java.util.Optional.of;
 
 public class EmployeeServiceTest {
 

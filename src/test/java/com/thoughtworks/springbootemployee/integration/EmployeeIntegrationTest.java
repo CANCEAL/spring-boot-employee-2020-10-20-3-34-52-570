@@ -68,5 +68,42 @@ public class EmployeeIntegrationTest {
                 .andExpect(jsonPath("$[0].salary").value(100));
     }
 
+    @Test
+    public void should_create_employee_when_create_given_employee_request() throws Exception {
+        //given
+        String employeeAsJson = "{\n" +
+                "    \"employee_name\": \"Alfred\",\n" +
+                "    \"age\": 25,\n" +
+                "    \"gender\": \"Male\",\n" +
+                "    \"salary\": 500\n" +
+                "}";
 
+        //when
+        //then
+        mockMvc.perform(post("/employees")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(employeeAsJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").isNumber())
+                .andExpect(jsonPath("$.employee_name").value("Alfred"))
+                .andExpect(jsonPath("$.age").value("25"))
+                .andExpect(jsonPath("$.gender").value("Male"))
+                .andExpect(jsonPath("$.salary").value("500"));
+    }
+
+    @Test
+    public void should_return_employee_when_get_given_employee_id() throws Exception {
+        //given
+        Employee employee = employeeRepository.save(new Employee(1, "Alfred", 22, "Male", 100));
+
+        //when
+        //then
+        mockMvc.perform(get("/employees/", employee.getId()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").isNumber())
+                .andExpect(jsonPath("$[0].employee_name").value("Alfred"))
+                .andExpect(jsonPath("$[0].age").value(22))
+                .andExpect(jsonPath("$[0].gender").value("Male"))
+                .andExpect(jsonPath("$[0].salary").value(100));
+    }
 }
